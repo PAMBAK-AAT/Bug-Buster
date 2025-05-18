@@ -1,6 +1,14 @@
 
+
 const express = require('express');
 const app = express();
+
+const cors = require('cors');
+app.use(cors({ origin: 'http://localhost:5173', credentials: true })); // Replace with your React frontend port
+
+// Import route files
+const registerRouter = require('./routes/register');
+const loginRouter = require('./routes/login');
 
 const { mongoConnection } = require("./databases/db.js");
 mongoConnection();
@@ -8,10 +16,6 @@ mongoConnection();
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Import route files
-const registerRouter = require('./routes/register');
-const loginRouter = require('./routes/login');
 
 // Mount routes directly at root
 app.use('/', registerRouter);
