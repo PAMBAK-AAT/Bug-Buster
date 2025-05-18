@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify'; // Import toast for notifications
 
 
 const Register = () => {
@@ -21,29 +22,29 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // prevent refreshing of page on submission
-        
+
         try {
             const response = await axios.post("http://localhost:3000/register", formData);
             console.log("Registration Successful: ", response.data);
-            alert("User registered successfully");
+            toast.success("User registered successfully");
         } catch (error) {
             console.error("Error during registration:", error.response?.data || error.message);
-            alert(error.response?.data || "Something went wrong");
+            toast.error(error.response?.data || "Something went wrong");
         }
     };
 
     return (
 
-        <section className="bg-gray-50 min-h-screen flex items-center justify-center">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
+        <section className="min-h-screen bg-gradient-to-tr from-purple-600 via-blue-500 to-indigo-600 flex items-center justify-center p-4">
+            <div className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-10 w-full max-w-md border border-white/20 animate-fade-in">
+                <h2 className="text-3xl font-extrabold text-white text-center mb-8 drop-shadow-lg">📝 Register</h2>
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="flex gap-4">
                         <input
                             type="text"
                             name="firstName"
-                            placeholder="enterFirst Name"
-                            className="w-1/2 p-2 border rounded"
+                            placeholder="Enter First Name"
+                            className="w-1/2 p-3 bg-white/20 placeholder-white text-gray-800 rounded-lg border border-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:bg-white/30 transition"
                             value={formData.firstName}
                             onChange={handleChange}
                             required
@@ -51,8 +52,8 @@ const Register = () => {
                         <input
                             type="text"
                             name="lastName"
-                            placeholder="enter Last Name"
-                            className="w-1/2 p-2 border rounded"
+                            placeholder="Enter Last Name"
+                            className="w-1/2 p-3 bg-white/20 placeholder-white text-gray-800 rounded-lg border border-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:bg-white/30 transition"
                             value={formData.lastName}
                             onChange={handleChange}
                             required
@@ -60,10 +61,10 @@ const Register = () => {
                     </div>
 
                     <input
-                        type="text"
+                        type="email"
                         name="email"
-                        placeholder="enter email"
-                        className="w-full p-2 border rounded"
+                        placeholder="Enter Email"
+                        className="w-full p-3 bg-white/20 placeholder-white text-gray-800 rounded-lg border border-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:bg-white/30 transition"
                         value={formData.email}
                         onChange={handleChange}
                         required
@@ -72,8 +73,8 @@ const Register = () => {
                     <input
                         type="tel"
                         name="phoneNo"
-                        placeholder="enter phone no."
-                        className="w-full p-2 border rounded"
+                        placeholder="Enter Phone No."
+                        className="w-full p-3 bg-white/20 placeholder-white text-gray-800 rounded-lg border border-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:bg-white/30 transition"
                         value={formData.phoneNo}
                         onChange={handleChange}
                         required
@@ -83,7 +84,7 @@ const Register = () => {
                         type="password"
                         name="password"
                         placeholder="Password"
-                        className="w-full p-2 border rounded"
+                        className="w-full p-3 bg-white/20 placeholder-white text-gray-800 rounded-lg border border-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:bg-white/30 transition"
                         value={formData.password}
                         onChange={handleChange}
                         required
@@ -93,21 +94,22 @@ const Register = () => {
                         type="password"
                         name="confirmPassword"
                         placeholder="Confirm Password"
-                        className="w-full p-2 border rounded"
+                        className="w-full p-3 bg-white/20 placeholder-white text-gray-800 rounded-lg border border-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:bg-white/30 transition"
                         value={formData.confirmPassword}
                         onChange={handleChange}
                         required
                     />
+
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+                        className="w-full py-3 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white font-semibold rounded-xl shadow-lg hover:scale-105 transform transition duration-300"
                     >
                         Register
                     </button>
-
                 </form>
             </div>
         </section>
+
     )
 }
 

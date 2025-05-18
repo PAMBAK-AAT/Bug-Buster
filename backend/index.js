@@ -3,6 +3,10 @@
 const express = require('express');
 const app = express();
 
+const { mongoConnection } = require("./databases/db.js");
+mongoConnection();
+
+const dotenv = require('dotenv');
 const cors = require('cors');
 app.use(cors({ origin: 'http://localhost:5173', credentials: true })); // Replace with your React frontend port
 
@@ -10,8 +14,6 @@ app.use(cors({ origin: 'http://localhost:5173', credentials: true })); // Replac
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 
-const { mongoConnection } = require("./databases/db.js");
-mongoConnection();
 
 // Middlewares
 app.use(express.json());
