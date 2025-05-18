@@ -32,7 +32,7 @@ const Login = () => {
 
         <section className="min-h-screen bg-gradient-to-tr from-purple-600 via-blue-500 to-indigo-600 flex items-center justify-center p-4">
             <div className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-10 w-full max-w-md border border-white/20 animate-fade-in">
-                <h2 className="text-3xl font-extrabold text-white text-center mb-8 drop-shadow-lg">🔐 Login Page</h2>
+                <h2 className="text-3xl font-extrabold text-white text-center mb-8 drop-shadow-lg">🔐 Login</h2>
                 <form className="space-y-6">
                     <input
                         type="email"

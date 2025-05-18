@@ -1,7 +1,6 @@
 
 import './App.css'
-import Register from './components/register.jsx'
-import Login from './components/login.jsx'
+import AuthPage from './components/authPage.jsx' // Importing the AuthPage component
 
 import { ToastContainer } from 'react-toastify'; // To use toast notifications
 
@@ -9,8 +8,7 @@ function App() {
   
   return (
     <>
-      <Login />
-      <Register />
+      <AuthPage />
       <ToastContainer />
     </>
   )
