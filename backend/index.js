@@ -13,18 +13,19 @@ app.use(cors({ origin: 'http://localhost:5173', credentials: true })); // Replac
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const auth = require('./middlewares/auth.js');
 
 // Import route files for User API's
 const registerRouter = require('./routes/User/register.js');
 const loginRouter = require('./routes/User/login.js');
 const profileRouter = require('./routes/User/profile.js');
-const submissionRouter = require('./routes/User/submission.js');
-const logoutRouter = require('./routes/User/logout.js');
+// const submissionRouter = require('./routes/User/submission.js');
+// const logoutRouter = require('./routes/User/logout.js');
 
 // User API's
 app.use('/', registerRouter);
 app.use('/', loginRouter);
-app.use('/', profileRouter);
+app.use('/', auth, profileRouter);
 // app.use('/', logoutRouter);
 // app.use('/', submissionRouter);
 

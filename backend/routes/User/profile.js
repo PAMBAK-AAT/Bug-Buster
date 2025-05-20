@@ -6,8 +6,8 @@ const auth  = require("../../middlewares/auth.js");
 const { getProfile, updateProfile, deleteProfile } = require("../../controllers/profile.js");
 
 
-router.get("/profile/:id", auth, getProfile);
-router.put("/profile/:id", auth, updateProfile);
-router.delete("/profile/:id", auth, deleteProfile);
+router.get("/profile/:id", getProfile);
+router.put("/profile/:id", updateProfile);
+router.delete("/profile/:id", deleteProfile);
 
 module.exports = router;

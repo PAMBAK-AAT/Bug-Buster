@@ -1,6 +1,12 @@
 
 
-const User  = require('../models/user');
+const express = require('express');
+const app = express();
+const User = require('../models/user.js');
+
+
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 const getProfile = async (req, res) => {
 
@@ -16,7 +22,7 @@ const updateProfile = async (req, res) => {
     try {
         const updates = req.body;
         const updatedUser = await User.findByIdAndUpdate(req.user._id, updates, { new: true}).select("-password");
-        res.status(200).json(updatedUser);
+        res.status(200).json({message: "User profile updated", updatedUser});
     } catch (error) {
         res.status(500).json({message: "Server error in updating the profile."});
     }
@@ -24,7 +30,7 @@ const updateProfile = async (req, res) => {
 
 const deleteProfile = async (req, res) => {
     try {
-        await User.findByIdAndDelete(req.user._id);
+        await User.findByIdAndDelete(req.params.id);
         res.status(200).json({message: "User deleted successfully"});
     } catch (error) {
         res.status(500).json({message: "Error in deleting the profile"});
