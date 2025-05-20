@@ -33,7 +33,7 @@ const loginUser = async (req, res) => {
             res.status(401).send("Invalid Password...");
         }
 
-        const token = jwt.sign({ _id: existingUser._id }, process.env.JWT_SECRET, { expiresIn: '5h' });
+        const token = jwt.sign({ _id: existingUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
         existingUser.token = token;
 
@@ -41,7 +41,7 @@ const loginUser = async (req, res) => {
         existingUser.password = undefined; // hide password in response;
 
 
-        res.status(200).json({ message: "User Login successfully", user: existingUser });
+        res.status(200).json({ message: "User Login successfully", token, user: existingUser });
 
     } catch (error) {
         console.error("Login error", error);
