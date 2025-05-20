@@ -25,7 +25,7 @@ const profileRouter = require('./routes/User/profile.js');
 // User API's
 app.use('/', registerRouter);
 app.use('/', loginRouter);
-app.use('/', auth, profileRouter);
+app.use('/',  profileRouter);
 // app.use('/', logoutRouter);
 // app.use('/', submissionRouter);
 
