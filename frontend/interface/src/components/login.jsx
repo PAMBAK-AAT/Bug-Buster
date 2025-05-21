@@ -1,5 +1,6 @@
 
 
+import { useNavigate } from 'react-router-dom';
 import {useState} from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify'; // Import toast for notifications
@@ -11,6 +12,8 @@ const Login = () => {
         password: "",
     });
 
+    const navigate = useNavigate(); // To redirect user after login
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -19,8 +22,15 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await axios.post("http://localhost:3000/login", formData);
-            console.log("User login successfully", response.data);
+            
+            const { token, user } = response.data;
+            localStorage.setItem("token", token); // Store token in local storage
+            localStorage.setItem("user", JSON.stringify(user)); // Store user data in local storage
+
             toast.success("User login successfully!");
+            navigate("/"); // Redirect to home page after successful login
+
+            // console.log("User login successfully", response.data);
         }
         catch (error) {
             console.error("Error in login", error.response?.data || error.message);

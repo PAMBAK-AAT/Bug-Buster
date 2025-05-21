@@ -4,6 +4,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify'; // Import toast for notifications
 
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+
 
 const Register = () => {
 
@@ -16,6 +18,8 @@ const Register = () => {
         confirmPassword: "",
     });
 
+    const navigate = useNavigate(); // To redirect user after registration
+    
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
@@ -26,6 +30,7 @@ const Register = () => {
         try {
             const response = await axios.post("http://localhost:3000/register", formData);
             console.log("Registration Successful: ", response.data);
+            navigate("/login"); // Redirect to login page after successful registration
             toast.success("User registered successfully");
         } catch (error) {
             console.error("Error during registration:", error.response?.data || error.message);

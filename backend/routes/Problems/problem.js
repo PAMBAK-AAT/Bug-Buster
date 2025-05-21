@@ -10,10 +10,10 @@ const roleCheck = require("../../middlewares/role.js");
 
 // Route to get all problems
 
-router.get('/problemList',  getAllProblem);
+router.get('/problemList', getAllProblem);
 router.get("/problem/:id", getProblemById);
 
-router.post('/admin/problem',  auth, addProblem); // LATER on provide isAdmin as admin
+router.post('/admin/problem', auth, addProblem); // LATER on provide isAdmin as admin
 router.put('/admin/problem/:id', auth, updateProblem);
 router.delete('/admin/problem/:id', auth, deleteProblem);
 
