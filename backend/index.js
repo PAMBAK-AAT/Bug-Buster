@@ -14,6 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const auth = require('./middlewares/auth.js');
+const { generateFile } = require('../../Practice/generateFile.js');
+const { executeCpp } = require('../../Practice/executeCpp.js');
 
 // Import route files for User API's
 const registerRouter = require('./routes/User/register.js');
@@ -21,6 +23,11 @@ const loginRouter = require('./routes/User/login.js');
 const profileRouter = require('./routes/User/profile.js');
 // const submissionRouter = require('./routes/User/submission.js');
 // const logoutRouter = require('./routes/User/logout.js');
+
+// Import route files for Problem API's
+const problemRouter = require('./routes/Problems/problem.js');
+
+
 
 // User API's
 app.use('/', registerRouter);
@@ -30,11 +37,30 @@ app.use('/',  profileRouter);
 // app.use('/', submissionRouter);
 
 
-// Import route files for Problem API's
-const problemRouter = require('./routes/Problems/problem.js');
 
 // Problem API's
 app.use("/", problemRouter);
+
+
+
+app.post('/run', async (req, res) => {
+    const { code, language='cpp' } = req.body;
+
+    if( code === undefined){
+        return res.status(400).json({message: "Code not provided"});
+    }
+
+    try {
+        const filePath = generateFile(language, code);
+        const output = await executeCpp(filePath);
+        res.json({filePath, output});
+    } catch (error) {
+        console.error("Error in running code: ", error.message);
+        return res.status(500).json({message: "Internal server error", error: error.message});
+    }
+
+})
+
 
 
 app.listen(process.env.PORT, () => {
