@@ -6,10 +6,12 @@ import Register from './components/register.jsx';
 import Login from './components/login.jsx';
 import HomePage from './components/homePage.jsx';
 import ProblemPage from './components/problemPage.jsx';
-import ProblemDetails from './components/problemDetails.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import ProfilePage from './components/profilePage.jsx';
 import Navbar from './components/Navbar.jsx';
+
+import SolveProblem from './components/solveProblem.jsx';
+
 
 import { ToastContainer } from 'react-toastify';
 
@@ -20,8 +22,7 @@ function App() {
       <div className="pt-20"> {/* padding to prevent overlap with fixed navbar */}
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/auth" element={<AuthPage />} />
           
           <Route
             path="/problemList"
@@ -36,7 +37,7 @@ function App() {
             path="/problem/:id"
             element={
               <PrivateRoute>
-                <ProblemDetails />
+                <SolveProblem />
               </PrivateRoute>
             }
           />
@@ -49,6 +50,7 @@ function App() {
               </PrivateRoute>
             }
           />
+
         </Routes>
         <ToastContainer />
       </div>
