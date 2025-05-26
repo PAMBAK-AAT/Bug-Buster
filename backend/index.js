@@ -43,7 +43,7 @@ app.use('/',  profileRouter);
 // Problem API's
 app.use("/", problemRouter);
 
-// app.use("/submit", submitRoute);
+app.use("/", submitRoute);
 
 app.post('/runWithInput', async (req, res) => {
     const { code, language='cpp', input} = req.body;

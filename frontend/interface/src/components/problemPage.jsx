@@ -65,17 +65,17 @@ const ProblemPage = () => {
 
             <div className="mt-6 space-y-2 text-gray-700 text-sm">
               <p className="flex items-center gap-2">
-                <Clock size={16} className="text-indigo-600" /> 
+                <Clock size={16} className="text-indigo-600" />
                 <span><strong>Time Limit:</strong> {problem.timeLimit}s</span>
               </p>
 
               <p className="flex items-center gap-2">
-                <Database size={16} className="text-indigo-600" /> 
+                <Database size={16} className="text-indigo-600" />
                 <span><strong>Memory Limit:</strong> {problem.memoryLimit} MB</span>
               </p>
 
               <p className="flex items-center gap-2">
-                <Tag size={16} className="text-indigo-600" /> 
+                <Tag size={16} className="text-indigo-600" />
                 <span><strong>Difficulty:</strong> <span className="capitalize">{problem.difficulty}</span></span>
               </p>
 
@@ -83,13 +83,13 @@ const ProblemPage = () => {
                 <>
                   {problem.sampleInput && (
                     <p className="flex items-center gap-2">
-                      <Terminal size={16} className="text-indigo-600" /> 
+                      <Terminal size={16} className="text-indigo-600" />
                       <span><strong>Sample Input:</strong> <code className="bg-gray-100 px-1 rounded">{problem.sampleInput}</code></span>
                     </p>
                   )}
                   {problem.sampleOutput && (
                     <p className="flex items-center gap-2">
-                      <Terminal size={16} className="text-indigo-600" /> 
+                      <Terminal size={16} className="text-indigo-600" />
                       <span><strong>Sample Output:</strong> <code className="bg-gray-100 px-1 rounded">{problem.sampleOutput}</code></span>
                     </p>
                   )}
@@ -111,8 +111,10 @@ const ProblemPage = () => {
             </div>
 
             <p className="mt-6 flex items-center text-xs text-gray-400 gap-2">
-              <Calendar size={14} /> Last updated: {new Date(problem.updatedAt).toLocaleDateString()}
+              <Calendar size={14} aria-hidden="true" />
+              Last updated: {problem.updatedAt ? new Date(problem.updatedAt).toLocaleDateString() : 'N/A'}
             </p>
+
           </div>
         ))}
       </div>

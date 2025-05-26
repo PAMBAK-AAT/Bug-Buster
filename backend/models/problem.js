@@ -40,7 +40,7 @@ const problemSchema = new Schema({
         {
             input: {type: String, required: true},
             output: {type: String, required: true},
-            isHidden: { type: Boolean, default: false},
+            isHidden: { type: Boolean, default: true},
         }
     ],
     createdAt:{

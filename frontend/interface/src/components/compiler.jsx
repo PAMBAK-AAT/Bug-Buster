@@ -10,11 +10,13 @@ import { Cpu, Code, PlayCircle, Terminal, Upload, CheckCircle, XCircle } from 'l
 // import { java } from '@codemirror/lang-java';
 // import { javascript } from '@codemirror/lang-javascript';
 
-const Compiler = () => {
+const Compiler = ({ problemId }) => {
   const [language, setLanguage] = useState('cpp');
   const [code, setCode] = useState('// Write your code here...');
   const [output, setOutput] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [runLoading, setRunLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+
   const [input, setInput] = useState('');
   const [verdict, setVerdict] = useState('');
   const [expectedOutput, setExpectedOutput] = useState('');
@@ -39,7 +41,7 @@ const Compiler = () => {
 
   const handleRun = async () => {
 
-    setLoading(true);
+    setRunLoading(true);
     setVerdict('');
     try {
       const res = await axios.post('http://localhost:3000/runWithInput', { language, code, input });
@@ -47,32 +49,33 @@ const Compiler = () => {
     } catch (error) {
       setOutput("❌ Error during execution: " + error.message);
     }
-    setLoading(false);
+    setRunLoading(false);
   };
 
 
-  // const handleSubmit = async () => {
+  const handleSubmit = async () => {
 
-  //   setLoading(true);
-  //   setVerdict('');
-  //   try {
-  //     const res = await axios.post('http://localhost:3000/submit', {
-  //       language,
-  //       code,
-  //       input,
-  //       expectedOutput
-  //     });
-  //     setOutput(res.data.output || "No output");
-  //     setVerdict(res.data.verdict || "No verdict");
+    setSubmitLoading(true);
+    setVerdict('');
+    try {
+      const res = await axios.post('http://localhost:3000/submit', {
+        problemId: problemId,
+        language,
+        code
+      });
+      setOutput(res.data.output || "All test cases passed");
+      setVerdict(res.data.verdict || "No verdict");
+      setExpectedOutput(res.data.expectedOutput || "All expected outputs are correct");
 
-  //   } catch (error) {
-  //     setOutput("�� Error during submission: " + error.message);
-  //   }
-  //   setLoading(false);
-  // }
+    } catch (error) {
+      setOutput("❌ Error during submission: " + error.message);
+    }
+    setSubmitLoading(false);
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl shadow-xl">
+
       {/* Language Select */}
       <div className="mb-6">
         <label className="flex items-center mb-2 text-xl font-semibold text-indigo-700 gap-2">
@@ -118,21 +121,36 @@ const Compiler = () => {
         />
       </div>
 
-
-      {/* Run Button */}
-      <div className="mb-6 text-right">
+      {/* Buttons: Run and Submit */}
+      <div className="mb-6 flex justify-end gap-4">
         <button
           onClick={handleRun}
-          disabled={loading}
+          disabled={runLoading}
           className="inline-flex items-center gap-2 px-8 py-3 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 active:scale-95 transition duration-300 disabled:opacity-50"
         >
-          {loading ? (
+          {runLoading ? (
             <>
               <PlayCircle className="animate-spin" size={20} /> Running...
             </>
           ) : (
             <>
               <PlayCircle size={20} /> Run
+            </>
+          )}
+        </button>
+
+        <button
+          onClick={handleSubmit}
+          disabled={submitLoading}
+          className="inline-flex items-center gap-2 px-8 py-3 bg-green-600 text-white font-bold rounded-xl shadow-lg hover:bg-green-700 active:scale-95 transition duration-300 disabled:opacity-50"
+        >
+          {submitLoading ? (
+            <>
+              <CheckCircle className="animate-spin" size={20} /> Submitting...
+            </>
+          ) : (
+            <>
+              <CheckCircle size={20} /> Submit
             </>
           )}
         </button>
@@ -147,6 +165,26 @@ const Compiler = () => {
           {output || <span className="text-indigo-400 italic">Output will appear here...</span>}
         </div>
       </div>
+
+      {/* Verdict and Expected Output (only shown after submission) */}
+      {verdict && (
+        <div className="mt-4 p-4 rounded-xl border border-green-500 bg-green-50 text-green-700 font-semibold flex items-center gap-3 shadow-md select-text">
+          {verdict.toLowerCase() === 'accepted' ? (
+            <CheckCircle size={24} className="text-green-600" />
+          ) : (
+            <XCircle size={24} className="text-red-600" />
+          )}
+          <span>Verdict: {verdict}</span>
+        </div>
+      )}
+
+      {expectedOutput && (
+        <div className="mt-2 p-4 rounded-xl border border-indigo-400 bg-indigo-50 text-indigo-700 font-mono whitespace-pre-wrap select-text">
+          <strong>Expected Output:</strong>
+          <pre>{expectedOutput}</pre>
+        </div>
+      )}
+
     </div>
   );
 };

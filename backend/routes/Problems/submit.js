@@ -4,33 +4,50 @@
 
 const express = require('express');
 const router = express.Router();
-const generateFile = require('../../generateFile');
-const executeCpp = require('../../executeCpp');
+const { generateFile } = require('../../generateFile');
+const { executeCpp } = require('../../executeCpp');
+const { generateInputFile } = require('../../generateInputFile');
+const Problem = require('../../models/problem.js');
 
-router.post('/', async (req, res) => {
-  const { language, code, input, expectedOutput } = req.body;
-
-  if (!code || !language || expectedOutput === undefined) {
-    return res.status(400).json({ error: 'Missing code, language, or expectedOutput' });
-  }
-
+router.post('/submit', async (req, res) => {
   try {
-    // 1. Generate file
-    const filepath = await generateFile(language, code);
+    const { code, language = 'cpp', problemId } = req.body;
 
-    // 2. Run the code with input
-    const output = await executeCpp(filepath, input);
+    const problem = await Problem.findById(problemId);
+    const testCases = problem.testCases.filter(tc => tc.isHidden);
 
-    // 3. Compare trimmed output
-    const userOutput = output.trim();
-    const expected = expectedOutput.trim();
 
-    const verdict = userOutput === expected ? 'Correct' : 'Wrong Answer';
+    for (let i = 0; i < testCases.length; i++) {
+      const inputFilePath = generateInputFile(testCases[i].input);
+      const filePath = generateFile(language, code);
+      const output = await executeCpp(filePath, inputFilePath);
 
-    return res.json({ output: userOutput, verdict });
+      const expectedOutput = testCases[i].output.trim();
+      const userOutput = output.trim();
+
+      if (userOutput !== expectedOutput) {
+        return res.json({
+          output: userOutput,
+          verdict: 'Wrong Answer',
+          expectedOutput: expectedOutput,
+          testCase: i + 1,
+        });
+      }
+    }
+
+    // All test cases passed
+    res.json({
+      verdict: "Accepted",
+      message: "All test cases passed successfully!"
+    });
+
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    console.error("Error in submission:", err);
+    res.status(500).json({ error: "Server error during submission" });
   }
 });
 
 module.exports = router;
+
+
+
