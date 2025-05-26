@@ -16,30 +16,33 @@ router.post('/submit', async (req, res) => {
     const problem = await Problem.findById(problemId);
     const testCases = problem.testCases.filter(tc => tc.isHidden);
 
+    const results = [];
+    const filePath = generateFile(language, code);
 
     for (let i = 0; i < testCases.length; i++) {
+
       const inputFilePath = generateInputFile(testCases[i].input);
-      const filePath = generateFile(language, code);
       const output = await executeCpp(filePath, inputFilePath);
 
       const expectedOutput = testCases[i].output.trim();
       const userOutput = output.trim();
 
-      if (userOutput !== expectedOutput) {
-        return res.json({
-          output: userOutput,
-          verdict: 'Wrong Answer',
-          expectedOutput: expectedOutput,
-          testCase: i + 1,
-        });
-      }
+      const isPassed = userOutput === expectedOutput;
+      results.push({
+        testCase: i+1,
+        input: testCases[i].input,
+        expectedOutput,
+        userOutput,
+        verdict: isPassed ? "Passed" : "Failed",
+      })
     }
 
-    // All test cases passed
-    res.json({
-      verdict: "Accepted",
-      message: "All test cases passed successfully!"
-    });
+    const allPassed = results.every(result => result.verdict === "Passed");
+    return res.json({
+      verdict: allPassed ? "Accepted" : "Wrong Answer",
+      results,
+    })
+
 
   } catch (err) {
     console.error("Error in submission:", err);

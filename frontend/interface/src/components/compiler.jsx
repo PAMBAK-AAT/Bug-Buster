@@ -1,5 +1,11 @@
 
 
+
+
+
+
+
+
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Cpu, Code, PlayCircle, Terminal, Upload, CheckCircle, XCircle } from 'lucide-react';
@@ -11,12 +17,13 @@ import { Cpu, Code, PlayCircle, Terminal, Upload, CheckCircle, XCircle } from 'l
 // import { javascript } from '@codemirror/lang-javascript';
 
 const Compiler = ({ problemId }) => {
+
   const [language, setLanguage] = useState('cpp');
   const [code, setCode] = useState('// Write your code here...');
   const [output, setOutput] = useState('');
   const [runLoading, setRunLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
-
+  const [results, setResults] = useState([]);
   const [input, setInput] = useState('');
   const [verdict, setVerdict] = useState('');
   const [expectedOutput, setExpectedOutput] = useState('');
@@ -57,15 +64,17 @@ const Compiler = ({ problemId }) => {
 
     setSubmitLoading(true);
     setVerdict('');
+    setResults([]); // clear previous results
     try {
       const res = await axios.post('http://localhost:3000/submit', {
         problemId: problemId,
         language,
         code
       });
-      setOutput(res.data.output || "All test cases passed");
+      setOutput(res.data.output || "Scroll down to see the results");
       setVerdict(res.data.verdict || "No verdict");
       setExpectedOutput(res.data.expectedOutput || "All expected outputs are correct");
+      setResults(res.data.results || []);
 
     } catch (error) {
       setOutput("❌ Error during submission: " + error.message);
@@ -167,7 +176,7 @@ const Compiler = ({ problemId }) => {
       </div>
 
       {/* Verdict and Expected Output (only shown after submission) */}
-      {verdict && (
+      {/* {verdict && (
         <div className="mt-4 p-4 rounded-xl border border-green-500 bg-green-50 text-green-700 font-semibold flex items-center gap-3 shadow-md select-text">
           {verdict.toLowerCase() === 'accepted' ? (
             <CheckCircle size={24} className="text-green-600" />
@@ -176,12 +185,45 @@ const Compiler = ({ problemId }) => {
           )}
           <span>Verdict: {verdict}</span>
         </div>
-      )}
+      )} */}
 
-      {expectedOutput && (
-        <div className="mt-2 p-4 rounded-xl border border-indigo-400 bg-indigo-50 text-indigo-700 font-mono whitespace-pre-wrap select-text">
-          <strong>Expected Output:</strong>
-          <pre>{expectedOutput}</pre>
+      {/* Verdict Display Section */}
+      {verdict && (
+        <div className="mt-6 p-4 rounded-md border border-indigo-300 bg-gray-100 shadow">
+          <h3 className="text-lg font-semibold text-indigo-700">Verdict: <span className={verdict === 'Accepted' ? 'text-green-600' : 'text-red-600'}>{verdict}</span></h3>
+
+          {/* Show detailed test case results if available */}
+          {results.length > 0 && (
+            <div className="mt-4 overflow-auto max-h-96 rounded-lg border border-indigo-400 shadow">
+              <table className="w-full text-left border-collapse">
+                <thead className="bg-indigo-100 text-indigo-800 font-semibold sticky top-0">
+                  <tr>
+                    <th className="p-2 border border-indigo-300">Test Case</th>
+                    <th className="p-2 border border-indigo-300">Input</th>
+                    <th className="p-2 border border-indigo-300">Expected Output</th>
+                    <th className="p-2 border border-indigo-300">Your Output</th>
+                    <th className="p-2 border border-indigo-300">Verdict</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {results.map((res, index) => (
+                    <tr key={index} className={res.verdict === 'Passed' ? 'bg-green-50' : 'bg-red-50'}>
+                      <td className="p-2 border border-indigo-300">{res.testCase}</td>
+                      <td className="p-2 border border-indigo-300 whitespace-pre-wrap">{res.input}</td>
+                      <td className="p-2 border border-indigo-300 whitespace-pre-wrap">{res.expectedOutput}</td>
+                      <td className="p-2 border border-indigo-300 whitespace-pre-wrap">{res.userOutput}</td>
+                      <td
+                        className="p-2 border border-indigo-300 font-semibold"
+                        style={{ color: res.verdict === 'Passed' ? 'green' : 'red' }}
+                      >
+                        {res.verdict}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       )}
 
