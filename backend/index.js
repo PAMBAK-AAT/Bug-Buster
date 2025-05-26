@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const auth = require('./middlewares/auth.js');
 const { generateFile } = require('./generateFile.js');
+const { generateInputFile } = require('./generateInputFile.js');
 const { executeCpp } = require('./executeCpp.js');
 const submitRoute = require('./routes/Problems/submit.js');
 
@@ -45,7 +46,7 @@ app.use("/", problemRouter);
 // app.use("/submit", submitRoute);
 
 app.post('/runWithInput', async (req, res) => {
-    const { code, language='cpp'} = req.body;
+    const { code, language='cpp', input} = req.body;
 
     if (!code) {
         return res.status(400).json({ message: "Code not provided" });
@@ -53,7 +54,8 @@ app.post('/runWithInput', async (req, res) => {
 
     try {
         const filePath = generateFile(language, code);
-        const output = await executeCpp(filePath);
+        const inputFilePath = generateInputFile(input);
+        const output = await executeCpp(filePath, inputFilePath);
         res.json({ output });
     } catch (error) {
         console.error("Error during code execution:", error);
