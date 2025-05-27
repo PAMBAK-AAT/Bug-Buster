@@ -36,14 +36,20 @@ const Compiler = ({ problemId }) => {
   ];
 
   // const getLanguageExtension = () => {
-  //   switch (language) {
-  //     case 'cpp': return cpp();
-  //     case 'python': return python();
-  //     case 'java': return java();
-  //     case 'javascript': return javascript();
-  //     default: return cpp();
+  //   try {
+  //     switch (language) {
+  //       case 'cpp': return cpp();
+  //       case 'python': return python();
+  //       case 'java': return java();
+  //       case 'javascript': return javascript();
+  //       default: return cpp();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error getting language extension:", error);
+  //     return cpp(); // fallback
   //   }
   // };
+
 
 
   const handleRun = async () => {
@@ -106,25 +112,26 @@ const Compiler = ({ problemId }) => {
       {/* Code Editor */}
       <div className="mb-6">
         <label className="flex items-center mb-2 text-xl font-semibold text-indigo-700 gap-2">
-          <Code size={28} /> Code Editor:
+          <Code size={24} /> Code Editor:
         </label>
         <textarea
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          rows={16}
+          rows={20}
           className="w-full p-5 rounded-xl border border-indigo-400 bg-gray-900 text-green-400 font-mono text-lg resize-none shadow-inner focus:outline-none focus:ring-4 focus:ring-indigo-600 transition"
         />
+
       </div>
 
       {/* Input Section */}
       <div className="mb-6">
         <label className="flex items-center mb-2 text-xl font-semibold text-indigo-700 gap-2">
-          <Upload size={24} /> Custom Input:
+          <Upload size={15} /> Custom Input:
         </label>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          rows={6}
+          rows={3}
           placeholder="Enter input for the program..."
           className="w-full p-4 rounded-xl border border-indigo-400 bg-gray-100 text-gray-800 font-mono text-md resize-none shadow-inner focus:outline-none focus:ring-4 focus:ring-indigo-300 transition"
         />
@@ -168,24 +175,13 @@ const Compiler = ({ problemId }) => {
       {/* Output Section */}
       <div>
         <label className="flex items-center mb-2 text-xl font-semibold text-indigo-700 gap-2">
-          <Terminal size={28} /> Output:
+          <Terminal size={15} /> Output:
         </label>
         <div className="w-full p-5 bg-black text-lime-400 rounded-xl font-mono min-h-[120px] border border-indigo-700 shadow-inner whitespace-pre-wrap select-text">
           {output || <span className="text-indigo-400 italic">Output will appear here...</span>}
         </div>
       </div>
 
-      {/* Verdict and Expected Output (only shown after submission) */}
-      {/* {verdict && (
-        <div className="mt-4 p-4 rounded-xl border border-green-500 bg-green-50 text-green-700 font-semibold flex items-center gap-3 shadow-md select-text">
-          {verdict.toLowerCase() === 'accepted' ? (
-            <CheckCircle size={24} className="text-green-600" />
-          ) : (
-            <XCircle size={24} className="text-red-600" />
-          )}
-          <span>Verdict: {verdict}</span>
-        </div>
-      )} */}
 
       {/* Verdict Display Section */}
       {verdict && (
