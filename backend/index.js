@@ -30,6 +30,9 @@ const profileRouter = require('./routes/User/profile.js');
 const problemRouter = require('./routes/Problems/problem.js');
 
 
+app.get("/", (req, res) => {
+    res.json({online: 'compiler is online'});
+})
 
 // User API's
 app.use('/', registerRouter);
