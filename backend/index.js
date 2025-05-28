@@ -17,6 +17,7 @@ const auth = require('./middlewares/auth.js');
 const { generateFile } = require('./generateFile.js');
 const { generateInputFile } = require('./generateInputFile.js');
 const { executeCpp } = require('./executeCpp.js');
+const {aiCodeReview} = require('./aiCodeReview.js');
 const submitRoute = require('./routes/Problems/submit.js');
 
 // Import route files for User API's
@@ -31,7 +32,7 @@ const problemRouter = require('./routes/Problems/problem.js');
 
 
 app.get("/", (req, res) => {
-    res.json({online: 'compiler is online'});
+    res.json({message: 'compiler is online'});
 })
 
 // User API's
@@ -65,6 +66,28 @@ app.post('/runWithInput', async (req, res) => {
         res.status(500).json({ message: "Internal server error", error });
     }
 });
+
+app.post("/ai-review", async (req, res) => {
+
+    const { code, prompt } = req.body;
+    if(!code?.trim() || !prompt?.trim()){
+        return res.status(400).json({
+            success: false,
+            error: "Code & prompt are required..."
+        });
+    }
+    try {
+        const reviewText = await aiCodeReview(code, prompt);
+        res.send(reviewText);
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: "Internal server error"
+        })
+    }
+
+})
 
 
 

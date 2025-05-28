@@ -2,19 +2,15 @@
 
 
 
-
-
-
-
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Cpu, Code, PlayCircle, Terminal, Upload, CheckCircle, XCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-// import CodeMirror from '@uiw/react-codemirror';
-// import { cpp } from '@codemirror/lang-cpp';
-// import { python } from '@codemirror/lang-python';
-// import { java } from '@codemirror/lang-java';
-// import { javascript } from '@codemirror/lang-javascript';
+import { Editor } from "@monaco-editor/react";
+
+
+
 
 const Compiler = ({ problemId }) => {
 
@@ -27,6 +23,10 @@ const Compiler = ({ problemId }) => {
   const [input, setInput] = useState('');
   const [verdict, setVerdict] = useState('');
   const [expectedOutput, setExpectedOutput] = useState('');
+  const [showPromptBox, setShowPromptBox] = useState(false);
+  const [prompt, setPrompt] = useState('');
+
+  const navigate = useNavigate();
 
   const languages = [
     { value: 'cpp', name: 'C++' },
@@ -35,21 +35,11 @@ const Compiler = ({ problemId }) => {
     { value: 'javascript', name: 'JavaScript' },
   ];
 
-  // const getLanguageExtension = () => {
-  //   try {
-  //     switch (language) {
-  //       case 'cpp': return cpp();
-  //       case 'python': return python();
-  //       case 'java': return java();
-  //       case 'javascript': return javascript();
-  //       default: return cpp();
-  //     }
-  //   } catch (error) {
-  //     console.error("Error getting language extension:", error);
-  //     return cpp(); // fallback
-  //   }
-  // };
 
+  const handleReview = async () => {
+    if (!prompt.trim()) return;
+    navigate('/ai-review', { state: { code, prompt } });
+  }
 
 
   const handleRun = async () => {
@@ -82,6 +72,10 @@ const Compiler = ({ problemId }) => {
       setExpectedOutput(res.data.expectedOutput || "All expected outputs are correct");
       setResults(res.data.results || []);
 
+      if (res.data.verdict === 'Accepted') {
+        setShowPromptBox(true);  // ✅ Only show prompt if code was Accepted
+      }
+
     } catch (error) {
       setOutput("❌ Error during submission: " + error.message);
     }
@@ -109,19 +103,51 @@ const Compiler = ({ problemId }) => {
         </select>
       </div>
 
+
       {/* Code Editor */}
+      
       <div className="mb-6">
         <label className="flex items-center mb-2 text-xl font-semibold text-indigo-700 gap-2">
           <Code size={24} /> Code Editor:
         </label>
-        <textarea
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          rows={20}
-          className="w-full p-5 rounded-xl border border-indigo-400 bg-gray-900 text-green-400 font-mono text-lg resize-none shadow-inner focus:outline-none focus:ring-4 focus:ring-indigo-600 transition"
-        />
 
+        {/* Editor Container with shadow, rounded corners, and subtle border */}
+        <div className="rounded-3xl overflow-hidden shadow-xl ring-1 ring-indigo-300 bg-gray-900 border border-indigo-700">
+          <Editor
+            height="400px"
+            defaultLanguage={language}
+            defaultValue={code}
+            value={code}
+            onChange={(value) => setCode(value || '')}
+            theme="vs-dark"
+            options={{
+              fontSize: 16,
+              fontFamily: '"Fira Code", "Fira Mono", monospace',
+              minimap: { enabled: false },
+              automaticLayout: true,
+              scrollBeyondLastLine: false,
+              wordWrap: "on",
+              lineNumbers: "on",
+              tabSize: 2,
+              formatOnType: true,
+              formatOnPaste: true,
+              renderLineHighlight: "all",
+              roundedSelection: true,
+              cursorSmoothCaretAnimation: true,
+              // smooth scrolling for a better experience
+              smoothScrolling: true,
+              // subtle cursor blinking style
+              cursorBlinking: "phase",
+              // nicer cursor style
+              cursorStyle: "line",
+              // enable selection highlight
+              selectionHighlight: true,
+            }}
+          />
+        </div>
       </div>
+
+
 
       {/* Input Section */}
       <div className="mb-6">
@@ -222,6 +248,26 @@ const Compiler = ({ problemId }) => {
           )}
         </div>
       )}
+
+      {showPromptBox && (
+        <div className="mt-6 p-4 bg-white border border-indigo-300 rounded-xl shadow">
+          <h3 className="text-lg font-semibold text-indigo-800 mb-2">AI Review Prompt:</h3>
+          <textarea
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Enter your prompt (e.g., Suggest optimizations)"
+            rows={3}
+            className="w-full p-3 rounded-lg border border-indigo-400 bg-gray-100 text-gray-900 font-medium"
+          />
+          <button
+            onClick={handleReview}
+            className="mt-4 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition"
+          >
+            Get AI Review
+          </button>
+        </div>
+      )}
+
 
     </div>
   );

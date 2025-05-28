@@ -1,3 +1,6 @@
+
+
+
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -9,6 +12,7 @@ import ProblemPage from './components/problemPage.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import ProfilePage from './components/profilePage.jsx';
 import Navbar from './components/Navbar.jsx';
+import Review from './components/Review.jsx';
 
 import SolveProblem from './components/solveProblem.jsx';
 
@@ -49,6 +53,11 @@ function App() {
                 <ProfilePage />
               </PrivateRoute>
             }
+          />
+
+          <Route 
+            path="/ai-review"
+            element={ <Review />}
           />
 
         </Routes>
