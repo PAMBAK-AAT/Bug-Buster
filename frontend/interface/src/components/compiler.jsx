@@ -4,7 +4,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import { Cpu, Code, PlayCircle, Terminal, Upload, CheckCircle, XCircle } from 'lucide-react';
+import { Cpu, Code, PlayCircle, Terminal, Upload, CheckCircle, XCircle, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { Editor } from "@monaco-editor/react";
@@ -105,7 +105,7 @@ const Compiler = ({ problemId }) => {
 
 
       {/* Code Editor */}
-      
+
       <div className="mb-6">
         <label className="flex items-center mb-2 text-xl font-semibold text-indigo-700 gap-2">
           <Code size={24} /> Code Editor:
@@ -215,41 +215,47 @@ const Compiler = ({ problemId }) => {
           <h3 className="text-lg font-semibold text-indigo-700">Verdict: <span className={verdict === 'Accepted' ? 'text-green-600' : 'text-red-600'}>{verdict}</span></h3>
 
           {/* Show detailed test case results if available */}
+
           {results.length > 0 && (
-            <div className="mt-4 overflow-auto max-h-96 rounded-lg border border-indigo-400 shadow">
-              <table className="w-full text-left border-collapse">
-                <thead className="bg-indigo-100 text-indigo-800 font-semibold sticky top-0">
-                  <tr>
-                    <th className="p-2 border border-indigo-300">Test Case</th>
-                    <th className="p-2 border border-indigo-300">Input</th>
-                    <th className="p-2 border border-indigo-300">Expected Output</th>
-                    <th className="p-2 border border-indigo-300">Your Output</th>
-                    <th className="p-2 border border-indigo-300">Verdict</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {results.map((res, index) => (
-                    <tr key={index} className={res.verdict === 'Passed' ? 'bg-green-50' : 'bg-red-50'}>
-                      <td className="p-2 border border-indigo-300">{res.testCase}</td>
-                      <td className="p-2 border border-indigo-300 whitespace-pre-wrap">{res.input}</td>
-                      <td className="p-2 border border-indigo-300 whitespace-pre-wrap">{res.expectedOutput}</td>
-                      <td className="p-2 border border-indigo-300 whitespace-pre-wrap">{res.userOutput}</td>
-                      <td
-                        className="p-2 border border-indigo-300 font-semibold"
-                        style={{ color: res.verdict === 'Passed' ? 'green' : 'red' }}
-                      >
-                        {res.verdict}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="mt-4">
+              <div className="flex flex-wrap gap-2 mb-4">
+                {results.map((res, index) => (
+                  <div
+                    key={index}
+                    className={`px-4 py-2 rounded-lg font-semibold shadow ${res.verdict === 'Passed' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                      }`}
+                  >
+                    Test Case {res.testCase}
+                  </div>
+                ))}
+              </div>
+
+              {/* If a failed test case exists, show its input/output/expected */}
+              {results.find(r => r.verdict === "Failed") && (
+                <div className="p-4 bg-red-50 border border-red-300 rounded-xl">
+                  <h4 className="text-lg font-bold text-red-700 mb-2">❌ Failed Test Case Details</h4>
+                  <div className="mb-2">
+                    <strong className="text-red-600">Input:</strong>
+                    <pre className="bg-white border border-red-200 p-2 rounded text-sm">{results.find(r => r.verdict === "Failed").input}</pre>
+                  </div>
+                  <div className="mb-2">
+                    <strong className="text-red-600">Expected Output:</strong>
+                    <pre className="bg-white border border-red-200 p-2 rounded text-sm">{results.find(r => r.verdict === "Failed").expectedOutput}</pre>
+                  </div>
+                  <div>
+                    <strong className="text-red-600">Your Output:</strong>
+                    <pre className="bg-white border border-red-200 p-2 rounded text-sm">{results.find(r => r.verdict === "Failed").userOutput}</pre>
+                  </div>
+                </div>
+              )}
             </div>
           )}
+
+
         </div>
       )}
 
-      {showPromptBox && (
+      {/* {showPromptBox && (
         <div className="mt-6 p-4 bg-white border border-indigo-300 rounded-xl shadow">
           <h3 className="text-lg font-semibold text-indigo-800 mb-2">AI Review Prompt:</h3>
           <textarea
@@ -264,6 +270,28 @@ const Compiler = ({ problemId }) => {
             className="mt-4 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition"
           >
             Get AI Review
+          </button>
+        </div>
+      )} */}
+
+      {showPromptBox && (
+        <div className="mt-8 p-6 bg-white/60 backdrop-blur-md border border-indigo-200 rounded-2xl shadow-xl transition-all duration-300 hover:shadow-2xl">
+          <div className="flex items-center gap-2 mb-4">
+            <Sparkles className="text-indigo-600 w-6 h-6" />
+            <h3 className="text-xl font-bold text-indigo-900">AI Review Prompt</h3>
+          </div>
+          <textarea
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="💡 Enter your prompt (e.g., Suggest optimizations, review logic)..."
+            rows={4}
+            className="w-full p-4 rounded-xl border-2 border-indigo-300 bg-indigo-50 focus:bg-white focus:border-indigo-500 outline-none transition placeholder:text-indigo-400 text-indigo-900 font-medium shadow-inner resize-none"
+          />
+          <button
+            onClick={handleReview}
+            className="mt-5 w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl shadow-md hover:from-indigo-700 hover:to-purple-700 transition duration-300 transform hover:scale-[1.02]"
+          >
+            ✨ Get AI Review
           </button>
         </div>
       )}

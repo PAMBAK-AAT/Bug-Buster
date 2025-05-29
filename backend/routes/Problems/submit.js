@@ -18,6 +18,7 @@ router.post('/submit', async (req, res) => {
 
     const results = [];
     const filePath = generateFile(language, code);
+    let verdict = "Accepted";
 
     for (let i = 0; i < testCases.length; i++) {
 
@@ -30,19 +31,21 @@ router.post('/submit', async (req, res) => {
       const isPassed = userOutput === expectedOutput;
       results.push({
         testCase: i+1,
-        input: testCases[i].input,
-        expectedOutput,
-        userOutput,
-        verdict: isPassed ? "Passed" : "Failed",
-      })
+        verdict: isPassed? "Passed":"Failed",
+        ...(isPassed? {} : { // it means push only in results if failed else do nothing
+          input: testCases[i].input,
+          expectedOutput,
+          userOutput,
+        })
+      });
+
+      if(!isPassed){
+        verdict = "Wrong Answer";
+        break; // stop the loop as soon as a test case fails. this will save time.
+      };
     }
-
-    const allPassed = results.every(result => result.verdict === "Passed");
-    return res.json({
-      verdict: allPassed ? "Accepted" : "Wrong Answer",
-      results,
-    })
-
+    
+    return res.json({verdict, results  });
 
   } catch (err) {
     console.error("Error in submission:", err);
