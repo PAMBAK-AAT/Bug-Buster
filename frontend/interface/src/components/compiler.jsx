@@ -10,8 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import { Editor } from "@monaco-editor/react";
 
 
-
-
 const Compiler = ({ problemId }) => {
 
   const [language, setLanguage] = useState('cpp');
@@ -25,6 +23,7 @@ const Compiler = ({ problemId }) => {
   const [expectedOutput, setExpectedOutput] = useState('');
   const [showPromptBox, setShowPromptBox] = useState(false);
   const [prompt, setPrompt] = useState('');
+  const [copied, setCopied] = useState(false);
 
   const navigate = useNavigate();
 
@@ -35,10 +34,23 @@ const Compiler = ({ problemId }) => {
     { value: 'javascript', name: 'JavaScript' },
   ];
 
+  const handleCopy = () => {
+    if (code) {
+      navigator.clipboard.writeText(code).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+
+    }
+  }
+
 
   const handleReview = async () => {
     if (!prompt.trim()) return;
-    navigate('/ai-review', { state: { code, prompt } });
+    // navigate('/ai-review', { state: { code, prompt } });
+    localStorage.setItem('aiReviewData', JSON.stringify({ code, prompt }));
+    window.open("/ai-review", "_blank");
+
   }
 
 
@@ -83,7 +95,7 @@ const Compiler = ({ problemId }) => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl shadow-xl">
+    <div className="w-full h-full p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl shadow-xl overflow-auto">
 
       {/* Language Select */}
       <div className="mb-6">
@@ -112,7 +124,16 @@ const Compiler = ({ problemId }) => {
         </label>
 
         {/* Editor Container with shadow, rounded corners, and subtle border */}
-        <div className="rounded-3xl overflow-hidden shadow-xl ring-1 ring-indigo-300 bg-gray-900 border border-indigo-700">
+        <div className="relative rounded-3xl overflow-hidden shadow-xl ring-1 ring-indigo-300 bg-gray-900 border border-indigo-700">
+
+          <button
+            onClick={handleCopy}
+            className="absolute top-3 right-4 z-10 px-3 py-1 text-sm font-semibold text-cyan-300 bg-gray-800 border border-cyan-600 rounded-lg shadow-md hover:bg-cyan-700 hover:text-white transition-colors duration-300 select-none"
+          >
+            {copied ? "✅ Copied!" : "Copy"}
+          </button>
+
+
           <Editor
             height="400px"
             defaultLanguage={language}
@@ -148,7 +169,6 @@ const Compiler = ({ problemId }) => {
       </div>
 
 
-
       {/* Input Section */}
       <div className="mb-6">
         <label className="flex items-center mb-2 text-xl font-semibold text-indigo-700 gap-2">
@@ -162,6 +182,7 @@ const Compiler = ({ problemId }) => {
           className="w-full p-4 rounded-xl border border-indigo-400 bg-gray-100 text-gray-800 font-mono text-md resize-none shadow-inner focus:outline-none focus:ring-4 focus:ring-indigo-300 transition"
         />
       </div>
+
 
       {/* Buttons: Run and Submit */}
       <div className="mb-6 flex justify-end gap-4">
@@ -197,6 +218,7 @@ const Compiler = ({ problemId }) => {
           )}
         </button>
       </div>
+
 
       {/* Output Section */}
       <div>
@@ -255,25 +277,8 @@ const Compiler = ({ problemId }) => {
         </div>
       )}
 
-      {/* {showPromptBox && (
-        <div className="mt-6 p-4 bg-white border border-indigo-300 rounded-xl shadow">
-          <h3 className="text-lg font-semibold text-indigo-800 mb-2">AI Review Prompt:</h3>
-          <textarea
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Enter your prompt (e.g., Suggest optimizations)"
-            rows={3}
-            className="w-full p-3 rounded-lg border border-indigo-400 bg-gray-100 text-gray-900 font-medium"
-          />
-          <button
-            onClick={handleReview}
-            className="mt-4 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition"
-          >
-            Get AI Review
-          </button>
-        </div>
-      )} */}
-
+      
+      {/* show prompt box only after verdict === Accepted */}
       {showPromptBox && (
         <div className="mt-8 p-6 bg-white/60 backdrop-blur-md border border-indigo-200 rounded-2xl shadow-xl transition-all duration-300 hover:shadow-2xl">
           <div className="flex items-center gap-2 mb-4">

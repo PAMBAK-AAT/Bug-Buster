@@ -16,13 +16,32 @@ import {
 } from 'lucide-react';
 
 const Review = () => {
-    const location = useLocation();
-    const { code, prompt: initialPrompt } = location.state || {};
-
-    const [prompt, setPrompt] = useState(initialPrompt || '');
+    const [code, setCode] = useState('');
+    const [prompt, setPrompt] = useState('');
     const [review, setReview] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        if (review) {
+            navigator.clipboard.writeText(review).then(() => {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            })
+        }
+    }
+
+
+    // Fetch data from local storage
+    useEffect(() => {
+        const stored = localStorage.getItem('aiReviewData');
+        if (stored) {
+            const { code, prompt } = JSON.parse(stored);
+            setCode(code);
+            setPrompt(prompt);
+        }
+    }, []);
 
     const fetchReview = async () => {
         setLoading(true);
@@ -41,7 +60,7 @@ const Review = () => {
         if (code && prompt) fetchReview();
     }, [code]);
 
-    if (!code || !initialPrompt) {
+    if (!code || !prompt) {
         return (
             <div className="flex items-center justify-center h-screen text-red-600 text-lg font-semibold">
                 <AlertTriangle className="mr-2" /> No code or prompt data found.
@@ -99,11 +118,15 @@ const Review = () => {
                         <span className="text-gray-300 font-semibold">Analyzing your code...</span>
                     </div>
                 ) : (
-                    <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 overflow-x-auto shadow-inner">
-                        <div className="text-xs text-gray-400 mb-2 flex items-center gap-1">
+                    <div className="relative bg-gray-900 border border-gray-700 rounded-xl p-6 overflow-x-auto shadow-inner">
+                        <div className="text-sm text-gray-400 mb-2 flex items-center gap-1">
                             <TerminalSquare className="w-4 h-4 text-cyan-400" />
                             AI Output
                         </div>
+                        <button onClick={handleCopy} className="absolute top-4 right-4 px-4 py-2  bg-gradient-to-r from-cyan-500 to-fuchsia-600 text-white font-semibold text-sm rounded-full shadow-lg hover:from-cyan-600 hover:to-fuchsia-700 active:scale-95 transition duration-300 ease-in-out select-none">
+                            {copied ? "✅ Copied" : "Copy"}
+                        </button>
+
                         <SyntaxHighlighter
                             language="cpp"
                             style={okaidia}
