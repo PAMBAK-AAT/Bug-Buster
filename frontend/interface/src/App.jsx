@@ -15,6 +15,7 @@ import Navbar from './components/Navbar.jsx';
 import Review from './components/Review.jsx';
 
 import SolveProblem from './components/solveProblem.jsx';
+import IntroPage from './components/introPage.jsx';
 
 
 import { ToastContainer } from 'react-toastify';
@@ -25,6 +26,7 @@ function App() {
       <Navbar />
       <div className="pt-20"> {/* padding to prevent overlap with fixed navbar */}
         <Routes>
+          <Route path="/intro" element={<IntroPage/>} />
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
           

@@ -32,7 +32,7 @@ const ProblemDetails = () => {
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-6 py-10 bg-white rounded-3xl shadow-lg border border-gray-200 mt-10">
+        <div className="max-w-5xl mx-auto px-6 py-10 bg-white rounded-3xl shadow-lg border border-gray-200 mt-10 select-text">
             <h1 className="text-4xl font-extrabold text-indigo-700 mb-6 tracking-tight">{problem.title}</h1>
             <p className="text-gray-700 text-lg mb-8 leading-relaxed border-l-4 pl-4 border-blue-400 italic">
                 {problem.description}

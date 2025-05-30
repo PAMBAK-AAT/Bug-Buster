@@ -90,6 +90,15 @@ const HomePage = () => {
           box-shadow: 0 0 12px rgba(255,255,255,0.2), 0 0 20px rgba(255,255,255,0.1);
         }
       `}</style>
+      {/* Top-Right Button */}
+      <Link
+        to="/intro"
+        className="fixed top-20 right-6 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold px-5 py-2 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 z-50"
+      >
+        👤 Meet the Creator
+      </Link>
+
+
     </>
   );
 };

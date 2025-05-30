@@ -1,5 +1,6 @@
 
 
+
 // code.cpp -> on running -> a.exe(Windows) , ./a.exe -> print output
 // code.cpp -> a.out(Mac, Linux) , ./a.out -> print output
 
