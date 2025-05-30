@@ -30,65 +30,124 @@ export default function HomePage() {
   const [quote, setQuote] = useState({ q: "", a: "" });
 
   useEffect(() => {
-    // Pick a random quote on component mount
     const randomIndex = Math.floor(Math.random() * quotes.length);
     setQuote(quotes[randomIndex]);
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-800 to-purple-900 text-white p-6">
-      <div className="max-w-6xl w-full flex flex-col md:flex-row items-center md:justify-between gap-12">
-
-        {/* Quote Section */}
-        <div className="flex-1 text-center md:text-left">
-          <p className="text-2xl leading-relaxed font-light border-l-4 border-indigo-400 pl-6">
-            “{quote.q}”
-            <br />
-            <span className="block mt-4 font-semibold text-indigo-200">
-              — {quote.a}
-            </span>
-          </p>
-        </div>
-
-        {/* Profile Section */}
-        <div className="flex-1 max-w-sm bg-white bg-opacity-10 rounded-3xl p-8 text-center shadow-lg backdrop-blur-md border border-white/20">
-          <img
-            src={profileImg}
-            alt="Mohd Arshad"
-            className="mx-auto w-36 h-36 rounded-full border-4 border-white object-cover"
-          />
-          <h2 className="mt-6 text-2xl font-semibold text-white">Mohd Arshad</h2>
-          <p className="italic text-indigo-200 mt-1">Creator & Developer</p>
-
-          {/* Social Icons */}
-          <div className="flex justify-center space-x-6 mt-5 text-2xl">
-            <a
-              href="https://github.com/PAMBAK-AAT"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-gray-300 transition-colors"
-            >
-              <FaGithub />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/mohd-arshad-292a47278/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-blue-300 transition-colors"
-            >
-              <FaLinkedin />
-            </a>
-          </div>
-
-          {/* CTA Button */}
-          <button
-            onClick={() => (window.location.href = "/")}
-            className="mt-8 px-8 py-3 bg-green-500 hover:bg-green-600 rounded-full text-white font-semibold shadow-md hover:shadow-lg transition duration-300"
-          >
-            Enter the Arena
-          </button>
+    <>
+      {/* Background Particle Animation */}
+      <div className="fixed inset-0 bg-gradient-to-br from-cyan-900 via-sky-800 to-blue-900 -z-20">
+        <div className="relative w-full h-full overflow-hidden">
+          {[...Array(50)].map((_, i) => {
+            const colors = [
+              "bg-cyan-400",
+              "bg-pink-400",
+              "bg-purple-400",
+              "bg-blue-300",
+            ];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            return (
+              <span
+                key={i}
+                className={`absolute rounded-full opacity-80 animate-elliptic-glow ${color}`}
+                style={{
+                  width: `${Math.random() * 10 + 8}px`,
+                  height: `${Math.random() * 10 + 8}px`,
+                  left: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 8}s`,
+                  animationDuration: `${Math.random() * 6 + 6}s`,
+                }}
+              />
+            );
+          })}
         </div>
       </div>
-    </div>
+
+      {/* Semi-transparent overlay */}
+      <div className="fixed inset-0 bg-black/60 -z-10"></div>
+
+      {/* Main Container */}
+      <div className="min-h-screen flex items-center justify-center px-6 py-12">
+        <div className="max-w-6xl w-full flex flex-col md:flex-row items-center md:justify-between gap-14">
+          {/* Quote Card */}
+          <div className="flex-1 bg-white bg-opacity-20 rounded-3xl p-10 backdrop-blur-md border border-white/30 shadow-lg text-white max-w-xl text-center md:text-left">
+            <p className="text-3xl font-light border-l-4 border-cyan-400 pl-8 leading-relaxed select-text">
+              “{quote.q}”
+            </p>
+            <p className="mt-6 font-semibold text-cyan-300 text-xl select-text">
+              — {quote.a}
+            </p>
+          </div>
+
+          {/* Profile Card */}
+          <div className="flex-1 max-w-sm bg-white bg-opacity-20 rounded-3xl p-10 text-center shadow-xl backdrop-blur-md border border-white/30">
+            <img
+              src={profileImg}
+              alt="Mohd Arshad"
+              className="mx-auto w-40 h-40 rounded-full border-4 border-cyan-400 object-cover shadow-lg"
+            />
+            <h2 className="mt-8 text-3xl font-extrabold text-white drop-shadow-md">
+              Mohd Arshad
+            </h2>
+            <p className="italic text-cyan-300 mt-2 text-lg">Creator & Developer</p>
+
+            {/* Social Icons */}
+            <div className="flex justify-center space-x-8 mt-7 text-3xl text-cyan-300">
+              <a
+                href="https://github.com/PAMBAK-AAT"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                <FaGithub />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/mohd-arshad-292a47278/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                <FaLinkedin />
+              </a>
+            </div>
+
+            {/* Enter Button */}
+            <button
+              onClick={() => (window.location.href = "/")}
+              className="mt-10 px-10 py-3 bg-cyan-500 hover:bg-cyan-600 rounded-full text-white font-semibold shadow-md hover:shadow-xl transition duration-300"
+            >
+              Enter the Arena
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Particle Animation Styles */}
+      <style>{`
+        @keyframes elliptic-glow {
+          0% {
+            transform: translateY(100vh) rotate(0deg) scale(1);
+            opacity: 0;
+          }
+          25% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-30vh) rotate(720deg) scale(0.7);
+            opacity: 0;
+          }
+        }
+        .animate-elliptic-glow {
+          animation-name: elliptic-glow;
+          animation-timing-function: ease-in-out;
+          animation-iteration-count: infinite;
+          animation-fill-mode: forwards;
+          will-change: transform, opacity;
+          box-shadow: 0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.1);
+        }
+      `}</style>
+    </>
   );
 }
+
