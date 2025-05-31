@@ -29,6 +29,7 @@ const profileRouter = require('./routes/User/profile.js');
 
 // Import route files for Problem API's
 const problemRouter = require('./routes/Problems/problem.js');
+const leaderboardRouter = require('./routes/Submission/leaderboard.js');
 
 
 app.get("/", (req, res) => {
@@ -39,15 +40,14 @@ app.get("/", (req, res) => {
 app.use('/', registerRouter);
 app.use('/', loginRouter);
 app.use('/',  profileRouter);
-// app.use('/', logoutRouter);
-// app.use('/', submissionRouter);
-
 
 
 // Problem API's
 app.use("/", problemRouter);
 
 app.use("/", submitRoute);
+
+app.use("/", leaderboardRouter);
 
 app.post('/runWithInput', async (req, res) => {
     const { code, language='cpp', input} = req.body;

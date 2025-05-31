@@ -1,58 +1,89 @@
 
 
-import { Link } from "react-router-dom";
-import { isLoggedIn, getUser, logout } from "../utils/auth";
-import { LogIn, LogOut, UserPlus } from "lucide-react";
+
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { User } from "lucide-react";
+import { Trophy } from "lucide-react";
 
 const Navbar = () => {
-  const loggedIn = isLoggedIn();
-  const user = getUser();
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // On mount, read user from localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+
+    // Listen to storage event (in case login/logout happens in another tab)
+    const handleStorageChange = () => {
+      const updatedUser = localStorage.getItem("user");
+      setUser(updatedUser ? JSON.parse(updatedUser) : null);
+    };
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/auth");
+  };
 
   return (
-    <nav className="backdrop-blur-xl bg-white/70 shadow-md px-6 py-4 flex justify-between items-center fixed top-0 left-0 w-full z-50 border-b border-gray-200">
-      {/* Logo */}
+    <nav className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl
+      fixed top-4 left-4 right-4 max-w-6xl mx-auto px-8 py-4 flex justify-between items-center
+      shadow-md text-white font-semibold select-none z-50"
+    >
       <Link
         to="/"
-        className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent animate-text-glow drop-shadow-md tracking-tight"
+        className="hover:brightness-110 transition cursor-pointer text-2xl font-extrabold tracking-tight"
       >
         🧠 Online Judge
       </Link>
 
-      {/* Right Side */}
+      <Link
+        to="/leaderboard"
+        className="flex items-center gap-2 px-4 py-2 rounded-xl text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
+          hover:scale-105 hover:brightness-110 transition duration-300 shadow-md"
+      >
+        <Trophy size={18} />
+        Leaderboard
+      </Link>
+
       <div className="flex items-center gap-4">
-        {loggedIn ? (
+        {user ? (
           <>
             <Link
               to="/profile"
-              className="text-indigo-700 font-semibold hover:text-indigo-900 transition duration-200 underline-offset-2 hover:underline"
+              className="flex items-center gap-2 cursor-pointer hover:brightness-110 transition"
             >
-              👋 Hi, {user?.firstName}
+              <User size={20} />
+              <span>{user.firstName}</span>
             </Link>
             <button
-              onClick={() => {
-                logout();
-                window.location.reload();
-              }}
-              className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-pink-500 hover:brightness-110 text-white px-4 py-2 rounded-lg font-semibold shadow-md transition"
+              onClick={handleLogout}
+              className="text-yellow-400 hover:text-yellow-300 font-semibold px-3 py-1
+                rounded-lg border border-yellow-400 hover:border-yellow-300 transition"
             >
-              <LogOut size={18} /> Logout
+              Logout
             </button>
           </>
         ) : (
-          <>
-            <Link
-              to="/auth"
-              className="flex items-center gap-2 bg-gradient-to-r from-gray-700 to-gray-900 text-white px-4 py-2 rounded-lg hover:scale-105 font-medium shadow hover:shadow-xl transition"
-            >
-              <UserPlus size={18} /> Register
-            </Link>
-            <Link
-              to="/auth"
-              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:scale-105 font-medium shadow hover:shadow-xl transition"
-            >
-              <LogIn size={18} /> Login
-            </Link>
-          </>
+          <Link
+            to="/auth"
+            className="px-6 py-2 rounded-xl bg-gradient-to-r from-pink-400 via-red-500 to-yellow-400
+              text-white font-semibold cursor-pointer hover:scale-105 transition"
+          >
+            Login / Register
+          </Link>
         )}
       </div>
     </nav>
@@ -61,3 +92,99 @@ const Navbar = () => {
 
 export default Navbar;
 
+
+
+
+
+
+
+
+// import { useEffect, useState } from "react";
+// import { Link, useNavigate } from "react-router-dom";
+// import { User } from "lucide-react";
+// import { Trophy } from "lucide-react";
+
+// const Navbar = () => {
+//   const [user, setUser] = useState(null);
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const storedUser = localStorage.getItem("user");
+//     if (storedUser) {
+//       setUser(JSON.parse(storedUser));
+//     }
+
+//     const handleStorageChange = () => {
+//       const updatedUser = localStorage.getItem("user");
+//       setUser(updatedUser ? JSON.parse(updatedUser) : null);
+//     };
+//     window.addEventListener("storage", handleStorageChange);
+
+//     return () => {
+//       window.removeEventListener("storage", handleStorageChange);
+//     };
+//   }, []);
+
+//   const handleLogout = () => {
+//     localStorage.removeItem("token");
+//     localStorage.removeItem("userId");
+//     localStorage.removeItem("user");
+//     setUser(null);
+//     navigate("/auth");
+//   };
+
+//   return (
+//     <nav
+//       className="bg-white/70 backdrop-blur-md border border-gray-200 rounded-2xl
+//       fixed top-4 left-4 right-4 max-w-6xl mx-auto px-8 py-4 flex justify-between items-center
+//       shadow-md text-gray-800 font-semibold select-none z-50"
+//     >
+//       <Link
+//         to="/"
+//         className="hover:brightness-110 transition cursor-pointer text-2xl font-extrabold tracking-tight"
+//       >
+//         🧠 Online Judge
+//       </Link>
+
+//       <Link
+//         to="/leaderboard"
+//         className="flex items-center gap-2 px-4 py-2 rounded-xl text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
+//           hover:scale-105 hover:brightness-110 transition duration-300 shadow-md"
+//       >
+//         <Trophy size={18} />
+//         Leaderboard
+//       </Link>
+
+//       <div className="flex items-center gap-4">
+//         {user ? (
+//           <>
+//             <Link
+//               to="/profile"
+//               className="flex items-center gap-2 cursor-pointer hover:brightness-110 transition"
+//             >
+//               <User size={20} />
+//               <span>{user.firstName}</span>
+//             </Link>
+//             <button
+//               onClick={handleLogout}
+//               className="text-yellow-500 hover:text-yellow-400 font-semibold px-3 py-1
+//                 rounded-lg border border-yellow-400 hover:border-yellow-300 transition"
+//             >
+//               Logout
+//             </button>
+//           </>
+//         ) : (
+//           <Link
+//             to="/auth"
+//             className="px-6 py-2 rounded-xl bg-gradient-to-r from-pink-400 via-red-500 to-yellow-400
+//               text-white font-semibold cursor-pointer hover:scale-105 transition"
+//           >
+//             Login / Register
+//           </Link>
+//         )}
+//       </div>
+//     </nav>
+//   );
+// };
+
+// export default Navbar;

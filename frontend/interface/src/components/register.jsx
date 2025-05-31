@@ -1,3 +1,5 @@
+
+
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -14,20 +16,45 @@ const Register = () => {
     confirmPassword: "",
   });
 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match.");
+      return false;
+    }
+    // Add more validations if needed
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
+    setLoading(true);
     try {
       const response = await axios.post("http://localhost:3000/register", formData);
-      toast.success("User registered successfully");
-      navigate("/login");
+
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userId", response.data.user._id);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      toast.success("User registered successfully!");
+      // Option 1: Redirect to homepage after registration (auto login assumed)
+      // navigate("/");
+
+      // Option 2: If you want them to login manually, navigate to "/auth" with login toggle
+      navigate("/auth");
     } catch (error) {
-      toast.error(error.response?.data || "Something went wrong");
+      // Show backend error message if available, fallback to generic
+      toast.error(error.response?.data?.message || error.response?.data || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,7 +71,7 @@ const Register = () => {
         <h2 className="text-center text-gray-800 text-3xl font-extrabold mb-8 drop-shadow-sm">
           📝 Create Account
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6" noValidate>
           <div className="flex gap-5">
             <div className="relative w-1/2">
               <User className="absolute left-3 top-3.5 text-gray-500" size={20} />
@@ -115,6 +142,7 @@ const Register = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              minLength={6}
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-gray-300
                 placeholder-gray-400 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400
                 transition"
@@ -130,6 +158,7 @@ const Register = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
               required
+              minLength={6}
               className="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-gray-300
                 placeholder-gray-400 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-400
                 transition"
@@ -138,10 +167,12 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full py-3 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500
-              text-white font-semibold rounded-xl shadow-lg hover:scale-105 transform transition duration-300"
+            disabled={loading}
+            className={`w-full py-3 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500
+              text-white font-semibold rounded-xl shadow-lg hover:scale-105 transform transition duration-300
+              ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
       </div>
@@ -150,4 +181,7 @@ const Register = () => {
 };
 
 export default Register;
+
+
+
 

@@ -66,6 +66,7 @@ const registerUser = async (req, res) => {
         await user.save();
 
         user.password = undefined;
+        
         res.status(200).json({ message: "User registered successfully...", user });
 
     } catch (error) {

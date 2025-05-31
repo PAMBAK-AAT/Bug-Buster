@@ -73,13 +73,14 @@ const ProblemPage = () => {
               key={problem._id}
               className="bg-white/90 backdrop-blur-xl border border-indigo-200 shadow-xl hover:shadow-[0_10px_30px_rgba(99,102,241,0.4)] rounded-3xl p-6 transition-all duration-300 transform hover:-translate-y-2 hover:scale-[1.02]"
             >
-              <Link
-                to={`/problem/${problem._id}`}
+              <button
+                // to={`/problem/${problem._id}`}
+                onClick={ () => window.open(`/problem/${problem._id}`, '_blank')}
                 className="flex items-center text-2xl font-bold text-indigo-700 hover:text-indigo-900 hover:underline gap-2"
               >
                 {problem.title}
                 <ChevronRight size={22} />
-              </Link>
+              </button>
 
               <p className="mt-3 text-gray-600 text-sm line-clamp-3">{problem.description}</p>
 

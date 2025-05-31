@@ -40,7 +40,7 @@ const loginUser = async (req, res) => {
         await existingUser.save();
         existingUser.password = undefined; // hide password in response;
 
-
+        
         res.status(200).json({ message: "User Login successfully", token, user: existingUser });
 
     } catch (error) {

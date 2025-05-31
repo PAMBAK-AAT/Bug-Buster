@@ -73,11 +73,14 @@ const Compiler = ({ problemId }) => {
     setSubmitLoading(true);
     setVerdict('');
     setResults([]); // clear previous results
+    const userId = localStorage.getItem('userId');
+
     try {
       const res = await axios.post('http://localhost:3000/submit', {
         problemId: problemId,
         language,
-        code
+        code,
+        userId: userId,
       });
       setOutput(res.data.output || "Scroll down to see the results");
       setVerdict(res.data.verdict || "No verdict");
