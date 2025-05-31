@@ -28,6 +28,10 @@ const userSchema = new Schema({
         required: true,
         // match: /^[6-9]\d{9}$/  // Example for Indian 10-digit phone numbers
     },
+    noOfQuesSolved:{
+        type: Number,
+        default: 0,
+    }
     
 }, {timestamps: true}); // timestamps field -> automatically added two fields createdAt(date and time when first created), updatedAt(date and time when first updated)
 
