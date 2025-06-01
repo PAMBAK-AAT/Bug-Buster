@@ -18,7 +18,7 @@ const ProblemPage = () => {
   useEffect(() => {
     const fetchProblems = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/problemList');
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/problemList`);
         setProblems(res.data.problems);
         setLoading(false);
       } catch (error) {

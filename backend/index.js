@@ -7,7 +7,7 @@ const { mongoConnection } = require("./databases/db.js");
 mongoConnection();
 
 const cors = require('cors');
-app.use(cors({ origin: 'http://localhost:5173', credentials: true })); // Replace with your React frontend port
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true })); // Replace with your React frontend port
 
 // Middlewares
 app.use(express.json());
@@ -93,5 +93,6 @@ app.post("/ai-review", async (req, res) => {
 
 
 app.listen(process.env.PORT, () => {
-    console.log(`Server is listening to the port : ${process.env.PORT}`);
-})
+  console.log(`Listening on port ${process.env.PORT}`);
+});
+

@@ -1,7 +1,3 @@
-
-
-
-
 import { Link } from "react-router-dom";
 import { isLoggedIn, getUser } from "../utils/auth";
 
@@ -43,13 +39,13 @@ const HomePage = () => {
       </div>
 
       {/* Main Content */}
-      <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative z-10">
-        <div className="bg-white/10 backdrop-blur-xl border border-white/30 rounded-3xl shadow-2xl p-12 max-w-4xl w-full transition-all duration-700 ease-in-out hover:shadow-purple-500/50">
-          <h1 className="text-5xl font-extrabold text-purple-300 mb-8 tracking-tight drop-shadow-lg">
+      <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/30 rounded-3xl shadow-2xl p-6 sm:p-10 md:p-12 w-full max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl transition-all duration-700 ease-in-out hover:shadow-purple-500/50">
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-purple-300 mb-6 sm:mb-8 tracking-tight drop-shadow-lg">
             Welcome to <span className="text-indigo-300">Online Judge</span>
           </h1>
 
-          <p className="text-gray-200 text-xl mb-12 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-base sm:text-xl text-gray-200 mb-10 sm:mb-12 leading-relaxed max-w-3xl mx-auto">
             Dive into coding challenges, test your problem-solving skills, and rise up the leaderboard.
             <br />Start your journey to becoming a top programmer!
           </p>
@@ -57,13 +53,21 @@ const HomePage = () => {
           <div className="flex justify-center">
             <Link
               to="/problemList"
-              className="bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 text-white text-xl font-semibold px-12 py-4 rounded-3xl shadow-xl transform transition-transform hover:scale-110 hover:shadow-2xl"
+              className="bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 text-white text-sm sm:text-xl font-semibold px-6 sm:px-12 py-3 sm:py-4 rounded-3xl shadow-xl transform transition-transform hover:scale-110 hover:shadow-2xl"
             >
               🚀 Start Solving Problems
             </Link>
           </div>
         </div>
       </div>
+
+      {/* Top-Right Button */}
+      <Link
+        to="/intro"
+        className="fixed top-5 right-5 sm:top-20 sm:right-6 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold px-4 py-2 sm:px-5 sm:py-2 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 z-50 text-sm sm:text-base"
+      >
+        👤 Meet the Creator
+      </Link>
 
       {/* Animation CSS */}
       <style>{`
@@ -90,53 +94,9 @@ const HomePage = () => {
           box-shadow: 0 0 12px rgba(255,255,255,0.2), 0 0 20px rgba(255,255,255,0.1);
         }
       `}</style>
-      {/* Top-Right Button */}
-      <Link
-        to="/intro"
-        className="fixed top-20 right-6 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold px-5 py-2 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 z-50"
-      >
-        👤 Meet the Creator
-      </Link>
-
-
     </>
   );
 };
 
 export default HomePage;
-
-
-
-// import { Link } from "react-router-dom";
-// import { isLoggedIn, getUser } from "../utils/auth";
-
-// const HomePage = () => {
-//     const loggedIn = isLoggedIn();
-//     const user = getUser();
-
-//     return (
-//         <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 text-center px-4">
-//             <div className="bg-white shadow-2xl rounded-xl p-10 max-w-3xl w-full">
-//                 <h1 className="text-4xl md:text-5xl font-extrabold text-blue-700 mb-6 tracking-tight">
-//                     Welcome to <span className="text-purple-600">Online Judge</span>
-//                 </h1>
-
-//                 <p className="text-gray-600 text-lg mb-10 leading-relaxed">
-//                     Dive into coding challenges, test your problem-solving skills, and rise up the leaderboard. Start your journey to becoming a top programmer!
-//                 </p>
-
-//                 <div className="flex justify-center">
-//                     <Link
-//                         to="/problemList"
-//                         className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-lg font-semibold px-8 py-3 rounded-lg shadow-lg transform transition-transform hover:scale-105 hover:shadow-2xl"
-//                     >
-//                         🚀 Start Solving Problems
-//                     </Link>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default HomePage;
 

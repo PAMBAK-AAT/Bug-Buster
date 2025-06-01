@@ -60,7 +60,7 @@ const registerUser = async (req, res) => {
             phoneNo,
         })
 
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '5d' });
         user.token = token;
 
         await user.save();

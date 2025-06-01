@@ -59,7 +59,7 @@ const Compiler = ({ problemId }) => {
     setRunLoading(true);
     setVerdict('');
     try {
-      const res = await axios.post('http://localhost:3000/runWithInput', { language, code, input });
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/runWithInput`, { language, code, input });
       setOutput(res.data.output || "No output");
     } catch (error) {
       setOutput("❌ Error during execution: " + error.message);
@@ -76,7 +76,7 @@ const Compiler = ({ problemId }) => {
     const userId = localStorage.getItem('userId');
 
     try {
-      const res = await axios.post('http://localhost:3000/submit', {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/submit`, {
         problemId: problemId,
         language,
         code,

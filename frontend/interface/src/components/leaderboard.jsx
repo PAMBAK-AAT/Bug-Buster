@@ -10,7 +10,7 @@ const Leaderboard = () => {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/leaderboard", {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/leaderboard`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
