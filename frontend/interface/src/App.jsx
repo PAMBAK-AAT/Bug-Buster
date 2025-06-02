@@ -91,6 +91,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
+import Compiler from './components/compiler/Compiler.jsx';
 import AuthPage from './components/auth/AuthPage.jsx';
 import HomePage from './components/home/HomePage.jsx';
 import ProblemPage from './components/problem/ProblemPage.jsx';
@@ -99,7 +100,6 @@ import ProfilePage from './components/profile/ProfilePage.jsx';
 import Review from './components/review/Review.jsx';
 import IntroPage from './components/home/IntroPage.jsx';
 import Leaderboard from './components/leaderboard/Leaderboard.jsx';
-
 import Navbar from './components/common/Navbar.jsx';
 import PrivateRoute from './components/common/PrivateRoute.jsx';
 
