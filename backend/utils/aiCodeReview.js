@@ -13,7 +13,7 @@ const aiCodeReview = async (code, prompt) => {
         contents: `${prompt}\nCode:\n${code}`
     });
     
-    console.log(response.text);
+    // console.log(response.text);
     return response.text;
 };
 
