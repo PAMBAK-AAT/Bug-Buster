@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { isLoggedIn, getUser } from "../utils/auth";
+import { isLoggedIn, getUser } from "../../utils/auth";
 
 const HomePage = () => {
   const loggedIn = isLoggedIn();

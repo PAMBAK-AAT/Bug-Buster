@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import React, { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
-import profileImg from "../assets/profile2.jpg";
+import profileImg from "../../assets/profile2.jpg";
 
 const quotes = [
   {

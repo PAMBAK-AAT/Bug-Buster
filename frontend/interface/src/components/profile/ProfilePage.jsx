@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { getUser } from '../utils/auth';
+import { getUser } from '../../utils/auth';
 import {
   User,
   Mail,

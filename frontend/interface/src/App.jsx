@@ -4,22 +4,24 @@
 // import './App.css';
 // import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
-// import AuthPage from './components/authPage.jsx';
+// import AuthPage from './components/auth/AuthPage.jsx';
 // import HomePage from './components/homePage.jsx';
-// import ProblemPage from './components/problemPage.jsx';
+// import ProblemPage from './components/problem/ProblemPage.jsx';
 // import PrivateRoute from './components/PrivateRoute.jsx';
-// import ProfilePage from './components/profilePage.jsx';
-// import Navbar from './components/Navbar.jsx';
-// import Review from './components/Review.jsx';
-// import SolveProblem from './components/solveProblem.jsx';
-// import IntroPage from './components/introPage.jsx';
-// import Leaderboard from './components/leaderboard.jsx';
+// import ProfilePage from './components/profile/ProfilePage.jsx';
+// import Navbar from './components/common/Navbar.jsx';
+// import Review from './components/review/Review.jsx';
+// import SolveProblem from './components/problem/SolveProblem.jsx';
+// import IntroPage from './components/home/IntroPage.jsx';
+// import Leaderboard from './components/home/Leaderboard.jsx';
 
 // import { ToastContainer } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 // const AppContent = () => {
 //   const location = useLocation();
 
+//   // Conditionally hide navbar on specific routes
 //   const hideNavbar =
 //     location.pathname === '/auth' ||
 //     location.pathname === '/ai-review' ||
@@ -65,7 +67,8 @@
 
 //           <Route path="/ai-review" element={<Review />} />
 //         </Routes>
-//         <ToastContainer />
+
+//         <ToastContainer position="top-right" autoClose={3000} />
 //       </div>
 //     </>
 //   );
@@ -83,19 +86,22 @@
 
 
 
+
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
-import AuthPage from './components/authPage.jsx';
-import HomePage from './components/homePage.jsx';
-import ProblemPage from './components/problemPage.jsx';
-import PrivateRoute from './components/PrivateRoute.jsx';
-import ProfilePage from './components/profilePage.jsx';
-import Navbar from './components/Navbar.jsx';
-import Review from './components/Review.jsx';
-import SolveProblem from './components/solveProblem.jsx';
-import IntroPage from './components/introPage.jsx';
-import Leaderboard from './components/leaderboard.jsx';
+import AuthPage from './components/auth/AuthPage.jsx';
+import HomePage from './components/home/HomePage.jsx';
+import ProblemPage from './components/problem/ProblemPage.jsx';
+import SolveProblem from './components/problem/SolveProblem.jsx';
+import ProfilePage from './components/profile/ProfilePage.jsx';
+import Review from './components/review/Review.jsx';
+import IntroPage from './components/home/IntroPage.jsx';
+import Leaderboard from './components/leaderboard/Leaderboard.jsx';
+
+import Navbar from './components/common/Navbar.jsx';
+import PrivateRoute from './components/common/PrivateRoute.jsx';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -103,7 +109,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const AppContent = () => {
   const location = useLocation();
 
-  // Conditionally hide navbar on specific routes
   const hideNavbar =
     location.pathname === '/auth' ||
     location.pathname === '/ai-review' ||
@@ -119,7 +124,6 @@ const AppContent = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
-
           <Route
             path="/problemList"
             element={
@@ -128,7 +132,6 @@ const AppContent = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/problem/:id"
             element={
@@ -137,7 +140,6 @@ const AppContent = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/profile"
             element={
@@ -146,7 +148,6 @@ const AppContent = () => {
               </PrivateRoute>
             }
           />
-
           <Route path="/ai-review" element={<Review />} />
         </Routes>
 
@@ -165,4 +166,3 @@ function App() {
 }
 
 export default App;
-
