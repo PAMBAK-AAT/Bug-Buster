@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import ProblemDetails from './ProblemDetails';
-import Compiler from '../Compiler/Compiler';
+import Compiler from '../compiler/Compiler';
 import { useParams } from 'react-router-dom';
 
 const SolveProblem = () => {

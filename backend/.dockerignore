@@ -1,8 +1,8 @@
 
 
 node_modules
-input
-outputs
-codes
+utils/input
+utils/outputs
+utils/codes
 .env
 

@@ -2,9 +2,9 @@
 # === Backend ===
 /backend/node_modules/
 /backend/.env
-/backend/input/
-/backend/outputs/
-/backend/codes/
+/backend/utils/input/
+/backend/utils/outputs/
+/backend/utils/codes/
 
 # === Frontend ===
 /frontend/interface/node_modules/

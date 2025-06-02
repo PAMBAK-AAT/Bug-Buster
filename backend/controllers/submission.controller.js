@@ -1,8 +1,3 @@
-
-
-
-// controllers/submission.controller.js
-
 const Problem = require('../models/problem.model.js');
 const User = require('../models/user.model.js');
 const Submission = require('../models/submission.model.js');
@@ -15,15 +10,23 @@ const submitCode = async (req, res) => {
   try {
     const { code, language = 'cpp', problemId, userId } = req.body;
 
-    const problem = await Problem.findById(problemId);
-    const testCases = problem.testCases.filter(tc => tc.isHidden);
+    if (!code || !problemId || !userId) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
 
+    const problem = await Problem.findById(problemId);
+    if (!problem) {
+      return res.status(404).json({ error: "Problem not found" });
+    }
+
+    const testCases = problem.testCases.filter(tc => tc.isHidden); // Use hidden test cases
     const results = [];
-    const filePath = generateFile(language, code);
+
+    const filePath = await generateFile(language, code);
     let verdict = "Accepted";
 
     for (let i = 0; i < testCases.length; i++) {
-      const inputFilePath = generateInputFile(testCases[i].input);
+      const inputFilePath = await generateInputFile(testCases[i].input);
       const output = await executeCpp(filePath, inputFilePath);
 
       const expectedOutput = testCases[i].output.trim();

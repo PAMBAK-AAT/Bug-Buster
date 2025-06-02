@@ -47,7 +47,7 @@ const Review = () => {
         setLoading(true);
         setError('');
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/ai-review`, { code, prompt });
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/ai-review`, { code, prompt });
             setReview(response.data);
         } catch (err) {
             setError("⚠️ Error while fetching the review. Please try again.");

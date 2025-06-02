@@ -23,7 +23,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, formData);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, formData);
 
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userId", response.data.user._id);

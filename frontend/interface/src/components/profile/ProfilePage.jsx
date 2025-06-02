@@ -31,7 +31,7 @@ const ProfilePage = () => {
 
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/profile/${userId}`, {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/profile/${userId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }

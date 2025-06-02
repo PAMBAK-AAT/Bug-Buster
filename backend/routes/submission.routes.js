@@ -2,11 +2,10 @@
 
 
 
-// routes/submission.routes.js
 const express = require('express');
 const router = express.Router();
-const submissionController = require('../controllers/submission.controller.js');
+const { submitCode } = require('../controllers/submission.controller.js');
 
-router.post('/submit', submissionController.submitCode);
+router.post('/submit', submitCode);
 
 module.exports = router;
