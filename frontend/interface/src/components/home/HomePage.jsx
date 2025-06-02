@@ -42,7 +42,7 @@ const HomePage = () => {
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="bg-white/10 backdrop-blur-xl border border-white/30 rounded-3xl shadow-2xl p-6 sm:p-10 md:p-12 w-full max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl transition-all duration-700 ease-in-out hover:shadow-purple-500/50">
           <h1 className="text-3xl sm:text-5xl font-extrabold text-purple-300 mb-6 sm:mb-8 tracking-tight drop-shadow-lg">
-            Welcome to <span className="text-indigo-300">Online Judge</span>
+            Welcome to <span className="text-indigo-300">Bug-Buster</span>
           </h1>
 
           <p className="text-base sm:text-xl text-gray-200 mb-10 sm:mb-12 leading-relaxed max-w-3xl mx-auto">

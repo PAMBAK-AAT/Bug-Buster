@@ -46,7 +46,7 @@ const Navbar = () => {
         to="/"
         className="hover:brightness-110 transition cursor-pointer text-2xl font-extrabold tracking-tight"
       >
-        🧠 Online Judge
+        🧠 Bug-Buster
       </Link>
 
       <Link
