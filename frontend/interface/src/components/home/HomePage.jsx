@@ -1,5 +1,8 @@
+
+
 import { Link } from "react-router-dom";
 import { isLoggedIn, getUser } from "../../utils/auth";
+import { FaUserAstronaut } from "react-icons/fa"; // Add this at the top
 
 const HomePage = () => {
   const loggedIn = isLoggedIn();
@@ -38,65 +41,71 @@ const HomePage = () => {
         })}
       </div>
 
-      {/* Main Content */}
-      <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Main Content (with top padding to push below navbar) */}
+      <div className="pt-20 min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="bg-white/10 backdrop-blur-xl border border-white/30 rounded-3xl shadow-2xl p-6 sm:p-10 md:p-12 w-full max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl transition-all duration-700 ease-in-out hover:shadow-purple-500/50">
           <h1 className="text-3xl sm:text-5xl font-extrabold text-purple-300 mb-6 sm:mb-8 tracking-tight drop-shadow-lg">
             Welcome to <span className="text-indigo-300">Bug-Buster</span>
           </h1>
 
-          <p className="text-base sm:text-xl text-gray-200 mb-10 sm:mb-12 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-sm sm:text-lg md:text-xl text-gray-200 mb-8 sm:mb-10 leading-relaxed max-w-3xl mx-auto">
             Dive into coding challenges, test your problem-solving skills, and rise up the leaderboard.
             <br />Start your journey to becoming a top programmer!
           </p>
 
-          <div className="flex justify-center">
+          <div className="flex flex-wrap justify-center mb-6">
             <Link
               to="/problemList"
-              className="bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 text-white text-sm sm:text-xl font-semibold px-6 sm:px-12 py-3 sm:py-4 rounded-3xl shadow-xl transform transition-transform hover:scale-110 hover:shadow-2xl"
+              className="bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 text-white text-sm sm:text-lg md:text-xl font-semibold px-6 sm:px-10 md:px-12 py-3 sm:py-4 rounded-3xl shadow-xl transform transition-transform hover:scale-110 hover:shadow-2xl"
             >
-              🚀 Start Solving Problems
+              🚀 Start Exploring Problems
             </Link>
+          </div>
+
+          {/* Meet the Creator button placed naturally in flow */}
+          <div className="mt-6">
+            <Link
+              to="/intro"
+              className="inline-flex items-center gap-2 text-sm sm:text-base font-medium text-white px-5 py-2.5 rounded-full shadow-lg hover:shadow-pink-600/50 transition-all duration-300 hover:scale-105 border border-yellow-500"
+            >
+              <FaUserAstronaut className="text-gray-600 text-lg sm:text-xl drop-shadow-md" />
+              <span className="text-yellow-500 font-semibold tracking-wide">Meet the Creator</span>
+            </Link>
+
           </div>
         </div>
       </div>
 
-      {/* Top-Right Button */}
-      <Link
-        to="/intro"
-        className="fixed top-5 right-5 sm:top-20 sm:right-6 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold px-4 py-2 sm:px-5 sm:py-2 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 z-50 text-sm sm:text-base"
-      >
-        👤 Meet the Creator
-      </Link>
-
       {/* Animation CSS */}
       <style>{`
-        @keyframes float-glow {
-          0% {
-            transform: translateY(100vh) rotate(0deg) scale(1);
-            opacity: 0;
-          }
-          20% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-10vh) rotate(720deg) scale(0.7);
-            opacity: 0;
-          }
+      @keyframes float-glow {
+        0% {
+          transform: translateY(100vh) rotate(0deg) scale(1);
+          opacity: 0;
         }
+        20% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-10vh) rotate(720deg) scale(0.7);
+          opacity: 0;
+        }
+      }
 
-        .animate-float-glow {
-          animation-name: float-glow;
-          animation-timing-function: ease-in-out;
-          animation-iteration-count: infinite;
-          animation-fill-mode: forwards;
-          will-change: transform, opacity;
-          box-shadow: 0 0 12px rgba(255,255,255,0.2), 0 0 20px rgba(255,255,255,0.1);
-        }
-      `}</style>
+      .animate-float-glow {
+        animation-name: float-glow;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+        animation-fill-mode: forwards;
+        will-change: transform, opacity;
+        box-shadow: 0 0 12px rgba(255,255,255,0.2), 0 0 20px rgba(255,255,255,0.1);
+      }
+    `}</style>
     </>
   );
+
 };
 
 export default HomePage;
+
 
