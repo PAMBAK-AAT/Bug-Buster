@@ -1,9 +1,8 @@
-
-
 {
   "rewrites": [
-    { "source": "/problem/:id", "destination": "/" },
-    { "source": "/problem/*", "destination": "/" },
-    { "source": "/(.*)", "destination": "/" }
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
