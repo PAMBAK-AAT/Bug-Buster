@@ -2,7 +2,7 @@
 
 import { Link } from "react-router-dom";
 import { isLoggedIn, getUser } from "../../utils/auth";
-import { FaUserAstronaut } from "react-icons/fa"; // Add this at the top
+import { FaUserAstronaut, FaBolt } from "react-icons/fa"; // Add this at the top
 
 const HomePage = () => {
   const loggedIn = isLoggedIn();
@@ -44,9 +44,19 @@ const HomePage = () => {
       {/* Main Content (with top padding to push below navbar) */}
       <div className="pt-20 min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="bg-white/10 backdrop-blur-xl border border-white/30 rounded-3xl shadow-2xl p-6 sm:p-10 md:p-12 w-full max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl transition-all duration-700 ease-in-out hover:shadow-purple-500/50">
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-purple-300 mb-6 sm:mb-8 tracking-tight drop-shadow-lg">
-            Welcome to <span className="text-indigo-300">Bug-Buster</span>
-          </h1>
+          <div className="mb-6 sm:mb-8 text-center">
+            <div className="mb-6 sm:mb-8 text-center">
+              <h1 className="text-2xl sm:text-4xl font-extrabold text-purple-300 tracking-tight drop-shadow-lg">
+                Welcome to <span className="text-indigo-400">Bug-Buster</span>
+              </h1>
+              <h2 className="flex items-center justify-center gap-2 text-xl sm:text-2xl font-bold mt-2 text-yellow-300 hover:text-indigo-500 transition duration-300 transform hover:scale-105 drop-shadow-md">
+                <FaBolt className="text-yellow-400 animate-pulse" />
+                Top 50+ Interview Cracking Problems
+              </h2>
+            </div>
+
+          </div>
+
 
           <p className="text-sm sm:text-lg md:text-xl text-gray-200 mb-8 sm:mb-10 leading-relaxed max-w-3xl mx-auto">
             Dive into coding challenges, test your problem-solving skills, and rise up the leaderboard.

@@ -63,8 +63,11 @@ const ProblemPage = () => {
 
       {/* Main Content */}
       <div className="min-h-screen bg-transparent py-10 px-6 relative z-10">
-        <h2 className="flex items-center justify-center text-5xl font-extrabold mb-12 text-indigo-200 gap-4 drop-shadow-lg">
-          <BookOpen size={44} /> Practice Problems
+        <h2 className="flex items-center justify-center text-5xl font-extrabold mb-12 gap-4 text-indigo-200 drop-shadow-lg transition duration-300 transform hover:scale-105 hover:text-purple-300">
+          <BookOpen className="text-purple-300 animate-pulse drop-shadow" size={44} />
+          <span className="bg-gradient-to-r from-indigo-300 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            Interview Booster
+          </span>
         </h2>
 
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
@@ -75,7 +78,7 @@ const ProblemPage = () => {
             >
               <button
                 // to={`/problem/${problem._id}`}
-                onClick={ () => window.open(`/problem/${problem._id}`, '_blank')}
+                onClick={() => window.open(`/problem/${problem._id}`, '_blank')}
                 className="flex items-center text-2xl font-bold text-indigo-700 hover:text-indigo-900 hover:underline gap-2"
               >
                 {problem.title}
@@ -99,7 +102,7 @@ const ProblemPage = () => {
                   <span
                     className={`capitalize font-semibold px-2 py-0.5 rounded-full text-white 
                       ${problem.difficulty === 'easy' ? 'bg-green-500' :
-                      problem.difficulty === 'medium' ? 'bg-yellow-500' : 'bg-red-500'}`}
+                        problem.difficulty === 'medium' ? 'bg-yellow-500' : 'bg-red-500'}`}
                   >
                     {problem.difficulty}
                   </span>
