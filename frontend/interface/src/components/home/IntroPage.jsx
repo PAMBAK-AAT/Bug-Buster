@@ -1,49 +1,53 @@
 
-import { Link } from 'react-router-dom'
+
+
+
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { SiLeetcode } from "react-icons/si"; // Import LeetCode icon
 
 import profileImg from "../../assets/profile2.jpg";
 
 const quotes = [
   {
-    q: "Study isn't about memorizing facts, it's about wiring your brain to think deeply, solve elegantly, and learn relentlessly. In the end, knowledge fades, but the mindset stays.",
+    q: "Study isn't about memorizing facts; it's about training your mind to think deeply, solve elegantly, and learn relentlessly. Knowledge fades, but the mindset lasts.",
     a: "Mohd Arshad",
   },
   {
-    q: "Coding is not about typing lines; it’s about architecting logic. A true developer builds systems the way poets build stanzas — with clarity, rhythm, and intent.",
+    q: "Coding isn’t typing lines—it’s architecting logic. A true developer crafts systems like poets compose verses: with clarity, rhythm, and purpose.",
     a: "Mohd Arshad",
   },
   {
-    q: "A software engineer isn't just a coder — he's a thinker, a problem solver, and an artist whose canvas is the IDE and whose brush is logic.",
+    q: "A software engineer is a thinker and problem solver, an artist whose canvas is the IDE and brush is logic.",
     a: "Mohd Arshad",
   },
   {
-    q: "In both studying and coding, consistency beats talent. The one who shows up every day, however imperfect, will always outrun the one who waits for the perfect moment.",
+    q: "Consistency beats talent. Showing up daily, imperfectly, always outpaces waiting for perfection.",
     a: "Mohd Arshad",
   },
   {
-    q: "Every bug teaches you a lesson that theory never could. That’s the beauty of code — it rewards curiosity and punishes carelessness with wisdom.",
+    q: "Every bug teaches lessons theory can’t. Code rewards curiosity and punishes carelessness with wisdom.",
     a: "Mohd Arshad",
   },
   {
-    q: "When you study with passion and code with purpose, you're not just building software — you're building your mind into a fortress of clarity and discipline.",
+    q: "Coding with purpose builds not just software, but a mind fortified with clarity and discipline.",
     a: "Mohd Arshad",
   },
   {
-    q: "Great engineers aren't born with talent — they're built by thousands of hours spent debugging, doubting, failing, and refusing to give up.",
+    q: "Great engineers aren’t born; they’re forged by hours of debugging, doubting, failing, and never quitting.",
     a: "Mohd Arshad",
   },
   {
-    q: "A student's strength lies not in how quickly they understand, but in how relentlessly they pursue understanding. The same applies to code — it’s not how fast you write, but how deeply you think.",
+    q: "True strength is not how fast you code, but how deeply you think and relentlessly pursue understanding.",
     a: "Mohd Arshad",
   },
   {
-    q: "Behind every elegant solution is a series of painful iterations, mental rewrites, and silent perseverance. That’s the untold story of every software engineer.",
+    q: "Behind every elegant solution lies silent perseverance and painful iterations.",
     a: "Mohd Arshad",
   },
   {
-    q: "In the world of code and study, intelligence can give you a head start — but grit, discipline, and obsession with learning will take you to the finish line.",
+    q: "Intelligence may start you off, but grit, discipline, and obsession with learning finish the race.",
     a: "Mohd Arshad",
   },
 ];
@@ -88,68 +92,68 @@ export default function HomePage() {
       <div className="fixed inset-0 bg-black/60 -z-10"></div>
 
       {/* Main Layout */}
-      <div className="min-h-screen flex items-center justify-center px-6 py-12">
-        <div className="max-w-7xl w-full flex flex-col md:flex-row items-start gap-12">
-          {/* Profile Section */}
-          <div className="flex-1 bg-white bg-opacity-20 rounded-3xl p-6 backdrop-blur-md border border-white/30 shadow-lg text-white">
-            {/* Image + Right Side Info */}
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-              {/* Profile Image */}
-              <img
-                src={profileImg}
-                alt="Mohd Arshad"
-                className="w-72 h-72 rounded-3xl border-4 border-cyan-400 object-cover shadow-xl"
-              />
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 py-12 space-y-12 max-w-5xl mx-auto">
+        {/* Intro Card - Full Width */}
+        <div className="w-full bg-white bg-opacity-20 rounded-3xl p-8 backdrop-blur-md border border-white/30 shadow-lg text-white flex flex-col md:flex-row items-center gap-8">
+          {/* Profile Image */}
+          <img
+            src={profileImg}
+            alt="Mohd Arshad"
+            className="w-64 h-64 rounded-3xl border-4 border-cyan-400 object-cover shadow-xl"
+          />
 
-              {/* Name, Role, Socials */}
-              <div className="flex flex-col justify-center text-center md:text-left">
-                <h2 className="text-3xl font-extrabold text-white">Mohd Arshad</h2>
-                <p className="text-lg text-cyan-300 font-medium mt-1">MERN Stack Developer</p>
+          {/* Info */}
+          <div className="flex flex-col justify-center text-center md:text-left max-w-2xl">
+            <h2 className="text-4xl font-extrabold text-white">Mohd Arshad</h2>
+            <p className="text-lg text-cyan-300 font-medium mt-1 mb-4">MERN Developer & DSA Problem Solver</p>
 
-                <div className="flex mt-4 space-x-6 justify-center md:justify-start text-cyan-300 text-2xl">
-                  <a
-                    href="https://github.com/PAMBAK-AAT"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-white"
-                  >
-                    <FaGithub />
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/mohd-arshad-292a47278/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-white"
-                  >
-                    <FaLinkedin />
-                  </a>
-                </div>
-              </div>
-            </div>
+            <p className="text-white/90 text-base leading-relaxed mb-6">
+              I am Mohd Arshad, a passionate MERN Stack Developer dedicated to building scalable and efficient web applications. I created an Online Judge platform where users can practice some of the most challenging and top-rated DSA interview problems, helping them sharpen their problem-solving skills.
+              <br /><br />
+              With a strong foundation in JavaScript, React, Node.js, Express, and MongoDB, I focus on writing clean, maintainable code that delivers great user experiences. I am also proficient in Docker and AWS, enabling me to containerize applications and deploy them securely and reliably to the cloud.
+              <br /><br />
+              Beyond coding, I am deeply interested in algorithms, data structures, Operating Systems, Computer Networking, and system design.
+  
+            </p>
 
-            {/* Description Below */}
-            <div className="mt-8 text-base leading-relaxed text-white/90">
-              <Link to="/" className="text-xl font-semibold text-cyan-300 mb-2">
-                Online Judge Platform
-              </Link>
-              <p>
-                I’m building a powerful and scalable <strong>Online Judge</strong> using the MERN stack with modern tools and infrastructure. It supports real-time code execution, problem solving, and user submissions — currently for C++.
-                <br />
-                This platform uses <strong>Docker</strong> containers for secure, isolated code execution and is integrated with <strong>AWS</strong> for future scalability. It features a clean UI, protected routes, login state management with localStorage, and a backend that’s optimized for performance.
-              </p>
+
+            <div className="flex space-x-8 justify-center md:justify-start text-cyan-300 text-3xl">
+              <a
+                href="https://leetcode.com/u/Pam_Bak_786/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition"
+              >
+                <SiLeetcode />
+              </a>
+              <a
+                href="https://github.com/PAMBAK-AAT"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition"
+              >
+                <FaGithub />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/mohd-arshad-292a47278/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition"
+              >
+                <FaLinkedin />
+              </a>
             </div>
           </div>
+        </div>
 
-
-          {/* Quote Section */}
-          <div className="flex-1 bg-white bg-opacity-20 rounded-3xl p-6 backdrop-blur-md border border-white/30 shadow-lg text-white max-w-xl text-center md:text-left">
-            <p className="text-2xl font-light border-l-4 border-cyan-400 pl-6 leading-relaxed select-text">
-              “{quote.q}”
-            </p>
-            <p className="mt-4 font-semibold text-cyan-300 text-lg select-text">
-              — {quote.a}
-            </p>
-          </div>
+        {/* Quote Card - Below, Single Line */}
+        <div className="w-full max-w-xl bg-white bg-opacity-20 rounded-3xl p-6 backdrop-blur-md border border-white/30 shadow-lg text-white text-center">
+          <p className="text-xl font-light border-l-4 border-cyan-400 pl-6 leading-relaxed select-text italic">
+            “{quote.q}”
+          </p>
+          <p className="mt-3 font-semibold text-cyan-300 text-lg select-text">
+            — {quote.a}
+          </p>
         </div>
       </div>
 
@@ -180,6 +184,7 @@ export default function HomePage() {
     </>
   );
 }
+
 
 
 
