@@ -92,9 +92,10 @@ export default function HomePage() {
       <div className="fixed inset-0 bg-black/60 -z-10"></div>
 
       {/* Main Layout */}
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 py-12 space-y-12 max-w-5xl mx-auto">
+      <div className="min-h-screen flex flex-col items-center justify-center  px-6 py-12 space-y-12 max-w-5xl mx-auto">
+      
         {/* Intro Card - Full Width */}
-        <div className="w-full bg-white bg-opacity-20 rounded-3xl p-8 backdrop-blur-md border border-white/30 shadow-lg text-white flex flex-col md:flex-row items-center gap-8">
+        <div className="w-full max-w-5xl bg-white bg-opacity-20 rounded-3xl p-8 backdrop-blur-md border border-white/30 shadow-lg text-white flex flex-row items-start gap-8">
           {/* Profile Image */}
           <img
             src={profileImg}
@@ -103,21 +104,23 @@ export default function HomePage() {
           />
 
           {/* Info */}
-          <div className="flex flex-col justify-center text-center md:text-left max-w-2xl">
+          <div className="flex flex-col justify-start text-left max-w-2xl">
             <h2 className="text-4xl font-extrabold text-white">Mohd Arshad</h2>
-            <p className="text-lg text-cyan-300 font-medium mt-1 mb-4">MERN Developer & DSA Problem Solver</p>
+            <p className="text-lg text-cyan-300 font-medium mt-1 mb-4">
+              MERN Developer & DSA Problem Solver
+            </p>
 
             <p className="text-white/90 text-base leading-relaxed mb-6">
               I am Mohd Arshad, a passionate MERN Stack Developer dedicated to building scalable and efficient web applications. I created an Online Judge platform where users can practice some of the most challenging and top-rated DSA interview problems, helping them sharpen their problem-solving skills.
-              <br /><br />
+              <br />
+              <br />
               With a strong foundation in JavaScript, React, Node.js, Express, and MongoDB, I focus on writing clean, maintainable code that delivers great user experiences. I am also proficient in Docker and AWS, enabling me to containerize applications and deploy them securely and reliably to the cloud.
-              <br /><br />
+              <br />
+              <br />
               Beyond coding, I am deeply interested in algorithms, data structures, Operating Systems, Computer Networking, and system design.
-  
             </p>
 
-
-            <div className="flex space-x-8 justify-center md:justify-start text-cyan-300 text-3xl">
+            <div className="flex space-x-8 justify-start text-cyan-300 text-3xl">
               <a
                 href="https://leetcode.com/u/Pam_Bak_786/"
                 target="_blank"
@@ -145,6 +148,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
 
         {/* Quote Card - Below, Single Line */}
         <div className="w-full max-w-xl bg-white bg-opacity-20 rounded-3xl p-6 backdrop-blur-md border border-white/30 shadow-lg text-white text-center">
