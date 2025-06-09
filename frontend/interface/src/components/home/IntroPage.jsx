@@ -130,7 +130,7 @@ export default function HomePage() {
                 <SiLeetcode />
               </a>
               <a
-                // href="https://github.com/PAMBAK-AAT"
+                href="https://github.com/PAMBAK-AAT"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition"
